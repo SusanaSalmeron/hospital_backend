@@ -1,29 +1,22 @@
 const router = require('express').Router();
 const bcrypt = require('bcryptjs');
-
-
-
-
-
-
-
-
-
+const createHttpError = require('http-errors');
+const { getUserByEmail } = require('../../models/users.model')
+const { createToken } = require('../../services/tokenService')
 
 //Login
 
-/* router.post('/login', async (req, res) => {
-    const user = await getByMail(req.body.email);
+router.post('/login', (req, res) => {
+    const user = getUserByEmail(req.body.email);
     if (!user) {
         return res.status(401).json({ error: "error en email y/o contraseña" });
     }
-    console.log(user)
-    const samePassword = bcrypt.compareSync(req.body.password, user.password);
-    if (samePassword) {
-        res.status(200).json({ msg: "Login correcto" });
+
+    if (req.body.password === user.password) {
+        res.status(200).json({ name: user.nombre, token: createToken(user) });
     } else {
-        res.json.status(401).json({ error: 'error en email y/o contraseña 2' });
+        res.status(401).json({ error: 'error en email y/o contraseña 2' });
     }
-}) */
+})
 
 module.exports = router;
