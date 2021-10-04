@@ -6,6 +6,14 @@ GET http://localhost:3001/api/patients?keyword=diabetes
 
 ###
 
+GET http://localhost:3001/api/patients/10000
+
+###
+
+GET http://localhost:3001/api/patients/10000/record
+
+###
+
 POST http://localhost:3001/api/users/login
 Content-Type: application/json
 
@@ -14,5 +22,13 @@ Content-Type: application/json
     "password": "Password1"
 }
 
+###
+POST http://localhost:3001/api/patients/10000/record/add
+Content-Type: application/json
 
+{
+    "diagnostics": "lupus",
+    "description": "a mi fringilla mi lacinia mattis. Integer eu lacus. Quisque imperdiet, erat nonummy ultricies ornare, elit elit fermentum risus, at fringilla purus mauris a nunc. In at pede. Cras vulputate velit eu sem. Pellentesque ut ipsum ac mi eleifend egestas. Sed pharetra, felis eget varius ultrices, mauris ipsum porta elit, a feugiat tellus lorem eu metus. In lorem. Donec elementum, lorem ut aliquam iaculis, lacus pede sagittis augue, eu tempor erat neque non quam. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam fringilla cursus purus. Nullam scelerisque neque sed sem egestas blandit. Nam nulla magna, malesuada vel, convallis in, cursus et, eros. Proin ultrices. Duis volutpat nunc sit amet metus. Aliquam erat volutpat. Nulla facilisis. Suspendisse commodo tincidunt nibh. Phasellus nulla. Integer vulputate, risus a ultricies adipiscing, enim mi tempor lorem, eget mollis lectus pede et risus. Quisque libero lacus, varius et, euismod et, commodo at, libero. Morbi accumsan laoreet ipsum. Curabitur consequat, lectus sit amet luctus vulputate, nisi sem semper erat, in consectetuer ipsum nunc id enim. Curabitur massa. Vestibulum accumsan neque et"
+}
 
+###
