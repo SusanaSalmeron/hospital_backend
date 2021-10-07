@@ -1,16 +1,37 @@
 GET http://localhost:3001/api/patients
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwZXJzb25hbCI6InNhbml0YXJpbyIsImV4cGlyYXRpb24iOjE2MzM2MDk2ODEsImlhdCI6MTYzMzYwOTM4MX0.HOZ_iZx72_YyKdaz_daOV8plrcZQEAxhY_doFJ0PjeM
 
 ###
 
-GET http://localhost:3001/api/patients?keyword=diabetes
+GET http://localhost:3001/api/patients?keyword=cold
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwZXJzb25hbCI6InNhbml0YXJpbyIsImV4cGlyYXRpb24iOjE2MzM2MDk2ODEsImlhdCI6MTYzMzYwOTM4MX0.HOZ_iZx72_YyKdaz_daOV8plrcZQEAxhY_doFJ0PjeM
+
 
 ###
 
 GET http://localhost:3001/api/patients/10000
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwZXJzb25hbCI6InNhbml0YXJpbyIsImV4cGlyYXRpb24iOjE2MzM2MDM0MzYsImlhdCI6MTYzMzYwMzEzNn0.WUjReh_JbMgt2DTNb3PY-EMZWq_XX9jA1LS7DLCuHxA
+
+
 
 ###
 
-GET http://localhost:3001/api/patients/10000/record
+GET http://localhost:3001/api/patients/10000
+Content-Type: application/json
+Authorization: Bearer terftgyuhuygytgytgyt
+
+
+
+###
+GET http://localhost:3001/api/patients/10001/record
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwZXJzb25hbCI6InNhbml0YXJpbyIsImV4cGlyYXRpb24iOjE2MzM2MDk2ODEsImlhdCI6MTYzMzYwOTM4MX0.HOZ_iZx72_YyKdaz_daOV8plrcZQEAxhY_doFJ0PjeM
+
+###
+
+GET http://localhost:3001/api/patients/options
 
 ###
 

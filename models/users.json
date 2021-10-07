@@ -28,5 +28,11 @@
         "email": "rodrisan@hospital.com",
         "password": "Password5",
         "personal": "administracion"
+    },
+    {
+        "nombre": "Lee Hunter",
+        "email": "curabitur.ut@orciluctus.net",
+        "password": "Password6",
+        "personal": "Patient"
     }
 ]

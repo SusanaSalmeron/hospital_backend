@@ -1,9 +1,11 @@
+const dayjs = require('dayjs');
 const fs = require('fs');
 const path = require('path');
 let rawdata = fs.readFileSync(path.resolve(__dirname, 'patients.json',));
 let rdata = fs.readFileSync(path.resolve(__dirname, 'clinicalRecord.json'))
 let patients = JSON.parse(rawdata);
 let records = JSON.parse(rdata);
+
 
 const diagnosticsMap = {}
 
@@ -14,11 +16,11 @@ const getAll = async () => {
 const getBy = async (params) => {
     const { keyword } = params
     return patients.filter(patient => {
-        return patient.diagnostics.toLowerCase() === keyword
+        console.log(patient)
+        return patient.diagnostics.toLowerCase().includes(keyword)
             || patient.address.toString() === keyword
             || patient.name.toLowerCase() === keyword
             || patient.email.toLowerCase() === keyword
-            || patient.diagnostics.toLowerCase() === keyword
             || patient.postalZip.toLowerCase() === keyword
             || patient.region.toLowerCase() === keyword
             || patient.country.toLowerCase() === keyword
@@ -53,18 +55,23 @@ const getRecordById = async (id) => {
 
 const addNewRecord = async (id, diagnostic, description) => {
     const patient = await getById(id)
-    console.log(patient)
     if (patient) { //1) Existe el paciente??
-        const patientDiagnostics = diagnosticsMap[id] || [] //Entiendes esto ???  
+        const patientDiagnostics = diagnosticsMap[id] || []
         const currentDiagnostic = {
             diagnostic: diagnostic,
-            description: description
+            description: description,
+            date: dayjs().format('DD-MM-YYYY')
         }
         patientDiagnostics.push(currentDiagnostic)
         diagnosticsMap[id] = patientDiagnostics
-        return true //Esto re.presenta que fue bien
+        return true
     }
-    return false //Esto representa que fue mal
+    return false
+}
+
+const getOptions = async (diagnostics) => {
+    diagnostics = patients.map(diagnostic => diagnostic.map(d => d.split('')))
+    console.log(diagnostics)
 }
 
 /*
@@ -73,4 +80,4 @@ con javascript con mapas, y practicar mergear informacion, entre otras cosas. Es
 para entender eso mejor. 
 */
 
-module.exports = { getAll, getBy, getById, getRecordById, addNewRecord };
+module.exports = { getAll, getBy, getById, getRecordById, addNewRecord, getOptions };
