@@ -11,7 +11,7 @@ const authenticateToken = (req, res, next) => {
             if (err) {
                 return res.sendStatus(403);
             }
-            req.personal = payload.personal
+            req.role = payload.role
             next();
         });
     } else {

@@ -1,10 +1,10 @@
 GET http://localhost:3001/api/patients
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwZXJzb25hbCI6InNhbml0YXJpbyIsImV4cGlyYXRpb24iOjE2MzM2MDk2ODEsImlhdCI6MTYzMzYwOTM4MX0.HOZ_iZx72_YyKdaz_daOV8plrcZQEAxhY_doFJ0PjeM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwZXJzb25hbCI6InNhbml0YXJpbyIsImV4cGlyYXRpb24iOjE2MzM2MzI1NzAsImlhdCI6MTYzMzYzMjI3MH0.oP6fZg7kNah6Qh0wT2Px_QmNhwohWXVJa9CsvsmH1Cs
 
 ###
 
-GET http://localhost:3001/api/patients?keyword=cold
+GET http://localhost:3001/api/patients?keyword=lupus
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwZXJzb25hbCI6InNhbml0YXJpbyIsImV4cGlyYXRpb24iOjE2MzM2MDk2ODEsImlhdCI6MTYzMzYwOTM4MX0.HOZ_iZx72_YyKdaz_daOV8plrcZQEAxhY_doFJ0PjeM
 
@@ -13,7 +13,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwZXJzb25hbCI6InNhb
 
 GET http://localhost:3001/api/patients/10000
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwZXJzb25hbCI6InNhbml0YXJpbyIsImV4cGlyYXRpb24iOjE2MzM2MDM0MzYsImlhdCI6MTYzMzYwMzEzNn0.WUjReh_JbMgt2DTNb3PY-EMZWq_XX9jA1LS7DLCuHxA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic2FuaXRhcmlvIiwiZXhwaXJhdGlvbiI6MTYzMzcwMDU2MSwiaWF0IjoxNjMzNzAwMjYxfQ.CsH4TNLZJHtL5VmWt0n75_LpxTBpw3Yn9GJ6yDAOems
 
 
 
@@ -27,7 +27,7 @@ Authorization: Bearer terftgyuhuygytgytgyt
 
 ###
 GET http://localhost:3001/api/patients/10001/record
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwZXJzb25hbCI6InNhbml0YXJpbyIsImV4cGlyYXRpb24iOjE2MzM2MDk2ODEsImlhdCI6MTYzMzYwOTM4MX0.HOZ_iZx72_YyKdaz_daOV8plrcZQEAxhY_doFJ0PjeM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic2FuaXRhcmlvIiwiZXhwaXJhdGlvbiI6MTYzMzcwMDU2MSwiaWF0IjoxNjMzNzAwMjYxfQ.CsH4TNLZJHtL5VmWt0n75_LpxTBpw3Yn9GJ6yDAOems
 
 ###
 
@@ -50,6 +50,22 @@ Content-Type: application/json
 {
     "diagnostics": "lupus",
     "description": "a mi fringilla mi lacinia mattis. Integer eu lacus. Quisque imperdiet, erat nonummy ultricies ornare, elit elit fermentum risus, at fringilla purus mauris a nunc. In at pede. Cras vulputate velit eu sem. Pellentesque ut ipsum ac mi eleifend egestas. Sed pharetra, felis eget varius ultrices, mauris ipsum porta elit, a feugiat tellus lorem eu metus. In lorem. Donec elementum, lorem ut aliquam iaculis, lacus pede sagittis augue, eu tempor erat neque non quam. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam fringilla cursus purus. Nullam scelerisque neque sed sem egestas blandit. Nam nulla magna, malesuada vel, convallis in, cursus et, eros. Proin ultrices. Duis volutpat nunc sit amet metus. Aliquam erat volutpat. Nulla facilisis. Suspendisse commodo tincidunt nibh. Phasellus nulla. Integer vulputate, risus a ultricies adipiscing, enim mi tempor lorem, eget mollis lectus pede et risus. Quisque libero lacus, varius et, euismod et, commodo at, libero. Morbi accumsan laoreet ipsum. Curabitur consequat, lectus sit amet luctus vulputate, nisi sem semper erat, in consectetuer ipsum nunc id enim. Curabitur massa. Vestibulum accumsan neque et"
+}
+
+###
+
+
+GET http://localhost:3001/api/patients/10003/appointments
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoicGF0aWVudCIsImV4cGlyYXRpb24iOjE2MzM3MDA1MjEsImlhdCI6MTYzMzcwMDIyMX0.IntlOpImKpDJqDWDkKGLqmav0JyshRD3hU0OgfRlNA0
+
+
+###
+POST http://localhost:3001/api/users/login
+Content-Type: application/json
+
+{
+    "email": "curabitur.ut@orciluctus.net",
+    "password": "Password6"
 }
 
 ###

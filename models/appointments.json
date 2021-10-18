@@ -1,0 +1,32 @@
+[
+    {
+        "id": 1,
+        "doctorId": 4,
+        "patientId": 10003,
+        "date": "15/10/2021"
+    },
+    {
+        "id": 2,
+        "doctorId": 9,
+        "patientId": 10018,
+        "date": "20/11/2021"
+    },
+    {
+        "id": 3,
+        "doctorId": 8,
+        "patientId": 10027,
+        "date": "10/10/2021"
+    },
+    {
+        "id": 4,
+        "doctorId": 8,
+        "patientId": 10031,
+        "date": "02/12/2021"
+    },
+    {
+        "id": 5,
+        "doctorId": 10,
+        "patientId": 10033,
+        "date": "15/10/2021"
+    }
+]

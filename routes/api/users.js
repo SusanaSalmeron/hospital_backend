@@ -11,7 +11,7 @@ router.post('/login', (req, res) => {
     }
 
     if (req.body.password === user.password) {
-        res.status(200).json({ name: user.nombre, token: createToken(user) });
+        res.status(200).json({ name: user.name, token: createToken(user), id: user.id });
     } else {
         res.status(401).json({ error: 'error en email y/o contraseña 2' });
     }

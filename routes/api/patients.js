@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { getAll, getBy, getById, getRecordById, addNewRecord, getOptions } = require('../../models/patients.model');
+const { getAppointById } = require('../../models/appointments.model');
 const { authenticateToken } = require('../../middleware/tokenAuthentication')
 
 
@@ -17,7 +18,7 @@ router.get('/:id', authenticateToken, async (req, res) => {
 })
 
 router.get('/:id/record', authenticateToken, async (req, res) => {
-    if (req.personal = "sanitario") {
+    if (req.role = "sanitario") {
         try {
             const record = await getRecordById(req.params.id)
             if (record) {
@@ -61,10 +62,23 @@ router.get('/', authenticateToken, async (req, res) => {
     }
 })
 
+router.get('/:id/appointments', authenticateToken, async (req, res) => {
+    try {
+        const patient = await getAppointById(req.params.id)
+        if (patient) {
+            res.json(patient)
+        } else {
+            res.status(404).json({ error: "Id not found" })
+        }
+    } catch (err) {
+        res.status(500).json({ error: "Internal Error" })
+    }
+})
+
 router.post('/:id/record/add', authenticateToken, async (req, res) => {
     const { diagnostics, description } = req.body
     const { id } = req.params
-    if (req.personal = "sanitario") {
+    if (req.role = "sanitario") {
         try {
             const recordAdded = await addNewRecord(id, diagnostics, description)
             if (recordAdded) {
@@ -78,8 +92,14 @@ router.post('/:id/record/add', authenticateToken, async (req, res) => {
     } else {
         res.status(403).json({ error: "Forbidden" })
     }
+})
+
+router.post('/:id/appointments/add', authenticateToken, async (req, res) => {
 
 })
+
+
+
 
 
 
