@@ -1,12 +1,8 @@
-const fs = require('fs');
-const path = require('path');
-
-let rawdata = fs.readFileSync(path.resolve(__dirname, 'users.json'));
-let users = JSON.parse(rawdata);
 
 const getUserByEmail = (email) => {
-    const foundUser = users.filter(user => user.email === email)
-    return foundUser.length > 0 ? foundUser[0] : null
+    const users = db.getCollection('users')
+    const foundUser = users.findOne({ email: email })
+    return foundUser
 }
 
 module.exports = { getUserByEmail };

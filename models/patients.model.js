@@ -10,13 +10,13 @@ let records = JSON.parse(rdata);
 const diagnosticsMap = {}
 
 const getAll = async () => {
-    return patients
+    const patients = db.getCollection('patients')
+    return patients.find(true)
 }
 
 const getBy = async (params) => {
     const { keyword } = params
     return patients.filter(patient => {
-        console.log(patient)
         return patient.diagnostics.toLowerCase().includes(keyword)
             || patient.address.toString() === keyword
             || patient.name.toLowerCase() === keyword
@@ -28,11 +28,10 @@ const getBy = async (params) => {
     })
 }
 
-const getById = async (id) => {
-    const patient = patients.filter(patient => {
-        return patient.id === parseInt(id)
-    })
-    return patient.length === 1 ? patient[0] : null
+const getById = async (someId) => {
+    const patientsTable = db.getCollection('patients')
+    const patient = patientsTable.findOne({ id: parseInt(someId) })
+    return patient
 }
 
 const getRecordById = async (id) => {
@@ -73,11 +72,5 @@ const getOptions = async (diagnostics) => {
     diagnostics = patients.map(diagnostic => diagnostic.map(d => d.split('')))
     console.log(diagnostics)
 }
-
-/*
-NOTA: Estar usando y gestionando la informacion en fichero, de forma simple es para trabajar
-con javascript con mapas, y practicar mergear informacion, entre otras cosas. Esto es una excusa 
-para entender eso mejor. 
-*/
 
 module.exports = { getAll, getBy, getById, getRecordById, addNewRecord, getOptions };

@@ -1,0 +1,62 @@
+[
+	{
+		"id": 1,
+		"name": "Karly Sosa",
+		"email": "velit.eu.sem@ipsum.co.uk",
+		"speciality": "radiology"
+	},
+	{
+		"id": 2,
+		"name": "Indigo Trevino",
+		"email": "nec.eleifend@tempuslorem.net",
+		"speciality": "surgery"
+	},
+	{
+		"id": 3,
+		"name": "Wendy Rush",
+		"email": "mauris.ut@imperdiet.net",
+		"speciality": "genetics"
+	},
+	{
+		"id": 4,
+		"name": "Ulysses Gray",
+		"email": "vestibulum.mauris@pedenonummy.com",
+		"speciality": "psychiatry"
+	},
+	{
+		"id": 5,
+		"name": "Kimberley Avery",
+		"email": "ultrices.duis@loremipsumdolor.ca",
+		"speciality": "family"
+	},
+	{
+		"id": 6,
+		"name": "Clementine Mcdaniel",
+		"email": "sed.est@sodalespurus.ca",
+		"speciality": "ophthalmology"
+	},
+	{
+		"id": 7,
+		"name": "Lev Adams",
+		"email": "curabitur@lectus.org",
+		"speciality": "radiology"
+	},
+	{
+		"id": 8,
+		"name": "Devin Fitzpatrick",
+		"email": "enim.etiam.imperdiet@enimgravida.net",
+		"speciality": "immunology"
+	},
+	{
+		"id": 9,
+		"name": "Dorothy Roberson",
+		"email": "sed@duiselementum.org",
+		"speciality": "neurology"
+	},
+	{
+		"id": 10,
+		"name": "Hector Potter",
+		"email": "nisl.sem.consequat@nulla.net",
+		"speciality": "oncology"
+	}
+]

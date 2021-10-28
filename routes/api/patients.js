@@ -1,12 +1,16 @@
 const router = require('express').Router();
 const { getAll, getBy, getById, getRecordById, addNewRecord, getOptions } = require('../../models/patients.model');
-const { getAppointById } = require('../../models/appointments.model');
-const { authenticateToken } = require('../../middleware/tokenAuthentication')
+const { getAppointById, addNewAppointment, changeAppointment, deleteAppointment } = require('../../models/appointments.model');
+const { authenticateToken } = require('../../middleware/tokenAuthentication');
+const dayjs = require('dayjs');
 
 
 router.get('/:id', authenticateToken, async (req, res) => {
     try {
-        const patient = await getById(req.params.id)
+        //Es aqui???
+        const id = req.params.id
+        console.log("Aqui sale un " + id)
+        const patient = await getById(id)
         if (patient) {
             res.json(patient)
         } else {
@@ -95,9 +99,46 @@ router.post('/:id/record/add', authenticateToken, async (req, res) => {
 })
 
 router.post('/:id/appointments/add', authenticateToken, async (req, res) => {
-
+    const { calendar, doctor } = req.body
+    let date = dayjs(calendar).format('DD/MM/YYYY')
+    const { id } = req.params
+    try {
+        const appointmentAdded = await addNewAppointment(id, date, doctor)
+        if (appointmentAdded) {
+            res.status(200).send();
+        } else {
+            res.status(404).json({ error: "No appointment" })
+        }
+    } catch (err) {
+        res.status(500).json({ error: "Internal Error" })
+    }
 })
 
+router.put('/:id/appointments/:appId', authenticateToken, async (req, res) => {
+    const { calendar } = req.body
+    let date = dayjs(calendar).format('DD/MM/YYYY')
+    const { id } = req.params
+    try {
+        const appointmentModified = await changeAppointment(id, date, appId, doctor)
+        if (appointmentModified) {
+            res.status(200).send();
+        }
+    } catch (err) {
+        res.status(500).json({ error: "Internal Error" })
+    }
+})
+
+router.delete('/:id/appointments/:appId', authenticateToken, async (req, res) => {
+    const { id, appId } = req.params
+    try {
+        const appointmentDeleted = await deleteAppointment(id, appId)
+        if (appointmentDeleted) {
+            res.status(200).send();
+        }
+    } catch (err) {
+        res.status(500).json({ error: "Internal Error" })
+    }
+})
 
 
 
