@@ -1,31 +1,36 @@
 const dayjs = require('dayjs');
-const fs = require('fs');
-const path = require('path');
-let rawdata = fs.readFileSync(path.resolve(__dirname, 'patients.json',));
-let rdata = fs.readFileSync(path.resolve(__dirname, 'clinicalRecord.json'))
-let patients = JSON.parse(rawdata);
-let records = JSON.parse(rdata);
 
-
-const diagnosticsMap = {}
 
 const getAll = async () => {
-    const patients = db.getCollection('patients')
-    return patients.find(true)
+    const patientsTable = db.getCollection('patients')
+    return patientsTable.find(true)
 }
 
 const getBy = async (params) => {
-    const { keyword } = params
-    return patients.filter(patient => {
-        return patient.diagnostics.toLowerCase().includes(keyword)
-            || patient.address.toString() === keyword
-            || patient.name.toLowerCase() === keyword
-            || patient.email.toLowerCase() === keyword
-            || patient.postalZip.toLowerCase() === keyword
-            || patient.region.toLowerCase() === keyword
-            || patient.country.toLowerCase() === keyword
-            || patient.phone.toLowerCase() === keyword
+    let { keyword } = params
+    keyword = keyword.toLowerCase()
+    const patientsTable = db.getCollection('patients')
+    let foundPatients = patientsTable.find({
+        '$or': [
+            { address: { '$regex': [keyword, 'i'] } },
+            { name: { '$regex': [keyword, 'i'] } },
+            { email: { '$regex': [keyword, 'i'] } },
+            { postalZip: { '$contains': keyword } },
+            { region: { '$regex': [keyword, 'i'] } },
+            { country: { '$regex': [keyword, 'i'] } },
+            { phone: { '$contains': keyword } }
+        ]
     })
+    const clinicalRecordsTable = db.getCollection('clinicalRecords')
+    let otherPatients = []
+    try {
+        let records = clinicalRecordsTable.find({ diagnostics: { '$regex': [keyword, 'i'] } })
+        otherPatients = records.map(record => patientTable.findOne({ id: record.id }))
+    } catch (err) {
+        console.log(err)
+    }
+
+    return foundPatients.concat(otherPatients)
 }
 
 const getById = async (someId) => {
@@ -35,18 +40,14 @@ const getById = async (someId) => {
 }
 
 const getRecordById = async (id) => {
-    const record = records.filter(record => {
-        return record.id === parseInt(id)
-    })
-    if (record.length === 1) {
-        const { name, address } = await getById(id)
+    const patient = await getById(id)
+    if (patient) {
+        const clinicalRecordsTable = db.getCollection('clinicalRecords')
+        const records = clinicalRecordsTable.find({ id: parseInt(id) })
         return {
-            ...record[0],
-            otherDiagnostics: diagnosticsMap[id] || [],
-            ...{
-                name: name,
-                address: address
-            }
+            name: patient.name,
+            address: patient.address,
+            records: records
         }
     }
     return null
@@ -54,15 +55,14 @@ const getRecordById = async (id) => {
 
 const addNewRecord = async (id, diagnostic, description) => {
     const patient = await getById(id)
-    if (patient) { //1) Existe el paciente??
-        const patientDiagnostics = diagnosticsMap[id] || []
-        const currentDiagnostic = {
+    if (patient) {
+        const recordsTable = db.getCollection('clinicalRecords')
+        recordsTable.insert({
+            id: parseInt(id),
             diagnostic: diagnostic,
             description: description,
             date: dayjs().format('DD-MM-YYYY')
-        }
-        patientDiagnostics.push(currentDiagnostic)
-        diagnosticsMap[id] = patientDiagnostics
+        })
         return true
     }
     return false
@@ -70,7 +70,7 @@ const addNewRecord = async (id, diagnostic, description) => {
 
 const getOptions = async (diagnostics) => {
     diagnostics = patients.map(diagnostic => diagnostic.map(d => d.split('')))
-    console.log(diagnostics)
+
 }
 
 module.exports = { getAll, getBy, getById, getRecordById, addNewRecord, getOptions };

@@ -115,9 +115,9 @@ router.post('/:id/appointments/add', authenticateToken, async (req, res) => {
 })
 
 router.put('/:id/appointments/:appId', authenticateToken, async (req, res) => {
-    const { calendar } = req.body
-    let date = dayjs(calendar).format('DD/MM/YYYY')
-    const { id } = req.params
+    const { pickedDate, doctor } = req.body
+    let date = dayjs(pickedDate).format('DD/MM/YYYY')
+    const { id, appId } = req.params
     try {
         const appointmentModified = await changeAppointment(id, date, appId, doctor)
         if (appointmentModified) {
