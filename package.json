@@ -5,12 +5,10 @@
   "scripts": {
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www",
-    "test": "mocha"
+    "test": "jest"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "chai": "^4.3.4",
-    "chai-http": "^4.3.0",
     "cookie-parser": "~1.4.4",
     "core-js": "^3.18.0",
     "cors": "^2.8.5",
@@ -25,6 +23,6 @@
     "pug": "^3.0.2"
   },
   "devDependencies": {
-    "mocha": "^9.1.3"
+    "jest": "^27.3.1"
   }
 }

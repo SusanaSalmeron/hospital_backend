@@ -6,7 +6,7 @@ const createToken = (user) => {
         role: user.role,
         expiration: dayjs().add(5, 'minutes').unix()
     }
-    return jwt.sign(claims, "minimou")
+    return jwt.sign(claims, process.env.SECRET_TOKEN)
 }
 
 module.exports = { createToken }
