@@ -1,7 +1,8 @@
 const userModel = require('../models/users.model');
+const faker = require('faker')
 
 const loki = require('lokijs')
-const mockEmail = "testing_email@gmail.com"
+let mockEmail = faker.internet.email()
 
 describe('manage users', () => {
     beforeAll(() => {
@@ -9,7 +10,7 @@ describe('manage users', () => {
         const table = db.addCollection("users");
         table.insert({
             email: mockEmail,
-            name: "pepito"
+            name: faker.name.findName()
         })
     });
     afterAll(() => {
@@ -17,7 +18,7 @@ describe('manage users', () => {
     })
     test('should get a valid user with given email', () => {
         const user = userModel.getUserByEmail(mockEmail)
-        expect(user.name).toBe('pepito')
-        expect(user.email).toBe(mockEmail)
+        expect(user.name).toBe(user.name)
+        expect(user.email).toBe(user.email)
     })
 })
