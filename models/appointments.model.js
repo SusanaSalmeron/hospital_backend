@@ -10,7 +10,6 @@ const getAppointById = async (id) => {
         appoints = appointmentsTable.find({ patientId: { '$eq': parseInt(id) } })
         return appoints.map(app => {
             const doc = doctorsTable.findOne({ id: app.doctorId })
-            console.log(app)
             return {
                 id: app.id,
                 pickedDate: app.pickedDate,

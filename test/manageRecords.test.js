@@ -1,11 +1,13 @@
 const patientModel = require('../models/patients.model');
 const loki = require('lokijs');
 const faker = require('faker');
+const { test, expect } = require('@jest/globals');
 
-let fakeIds = []
+
 let patientId = faker.datatype.number();
 let description = faker.lorem.paragraph();
 let diagnostic = faker.lorem.word();
+/* let keyword = faker.lorem.word(); */
 
 
 describe('manage patients records', () => {
@@ -45,9 +47,18 @@ describe('manage patients records', () => {
     })
     test('should show a patient record by id', async () => {
         const record = await patientModel.getRecordById(patientId)
-        console.log(record)
         expect(record).toBeTruthy()
         expect(record.records).toBeDefined()
         expect(record.records).toHaveLength(5)
     })
+    test("should add a new record", async () => {
+        const newRecord = await patientModel.addNewRecord(patientId, diagnostic, description)
+        console.log(newRecord)
+        expect(newRecord).toBeTruthy()
+    })
+
+    /* test("should get patients by keyword", async () => {
+        const patient = await patientModel.getBy(keyword)
+        expect(patient).toBeDefined()
+    }) */
 })

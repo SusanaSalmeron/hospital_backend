@@ -1,4 +1,4 @@
-const patientModel = require('../models/patients.model');
+const patientsModel = require('../models/patients.model');
 const loki = require('lokijs');
 const faker = require('faker');
 
@@ -33,22 +33,22 @@ describe('manage patients', () => {
         global.db.close()
     })
     test('should get the patients list', async () => {
-        const patients = await patientModel.getAll()
+        const patients = await patientsModel.getAll()
         expect(patients).toHaveLength(5)
     })
 
     test('should return a patient by id', async () => {
-        const patient = await patientModel.getById(fakeIds[3])
+        const patient = await patientsModel.getById(fakeIds[3])
         expect(patient).toBeDefined()
     })
     test('should return all patients by id', async () => {
         for (let i = 0; i < 5; i++) {
-            const patient = await patientModel.getById(fakeIds)
+            const patient = await patientsModel.getById(fakeIds)
             expect(patient).not.toBeNull()
         }
     })
     test('should return null', async () => {
-        const patient = await patientModel.getById(faker.datatype.number())
+        const patient = await patientsModel.getById(faker.datatype.number())
         expect(patient).toBeNull()
     })
 
