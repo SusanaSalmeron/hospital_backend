@@ -21,4 +21,9 @@ describe('manage users', () => {
         expect(user.name).toBe(user.name)
         expect(user.email).toBe(user.email)
     })
+
+    test('should not get a user with a non valid email', () => {
+        const user = userModel.getUserByEmail("lalala@pio.com")
+        expect(user).toBeNull()
+    })
 })

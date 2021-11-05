@@ -1,33 +1,14 @@
 const patientsModel = require('../models/patients.model');
+const { dataForPatientTest } = require('../mocks/mocksForPatients')
 const loki = require('lokijs');
 const faker = require('faker');
 
-let fakeIds = []
-
 describe('manage patients', () => {
+    let mockData
+
     beforeAll(() => {
         global.db = new loki('hospital.test.db');
-        const table = db.addCollection("patients");
-        for (let i = 0; i < 5; i++) {
-            const newFakeId = faker.datatype.number()
-            table.insert(
-                {
-                    password: faker.internet.password(),
-                    name: faker.name.findName(),
-                    address: faker.address.streetAddress(),
-                    email: faker.internet.email(),
-                    postalZip: faker.address.zipCode(),
-                    region: faker.address.state(),
-                    country: faker.address.country(),
-                    phone: faker.phone.phoneNumber(),
-                    id: newFakeId,
-                    dob: faker.date.past(),
-                    ssnumber: faker.datatype.number(8),
-                    company: faker.company.companyName()
-                }
-            );
-            fakeIds.push(newFakeId)
-        }
+        mockData = dataForPatientTest()
     })
     afterAll(() => {
         global.db.close()
@@ -38,18 +19,43 @@ describe('manage patients', () => {
     })
 
     test('should return a patient by id', async () => {
-        const patient = await patientsModel.getById(fakeIds[3])
+        const patient = await patientsModel.getById(mockData.fakePatientIds[0])
         expect(patient).toBeDefined()
     })
-    test('should return all patients by id', async () => {
-        for (let i = 0; i < 5; i++) {
-            const patient = await patientsModel.getById(fakeIds)
+
+    test('should return all patients by id', () => {
+        mockData.fakePatientIds.forEach(async id => {
+            const patient = await patientsModel.getById(id)
             expect(patient).not.toBeNull()
-        }
+        })
     })
-    test('should return null', async () => {
+
+    test('should return null from a non valid patient id', async () => {
         const patient = await patientsModel.getById(faker.datatype.number())
         expect(patient).toBeNull()
+    })
+
+    test('should return records from a valid patient', async () => {
+        const records = await patientsModel.getRecordById(mockData.fakePatientIds[3])
+        expect(records).toBeTruthy()
+        expect(records.name).toBeDefined()
+    })
+
+    test('should not return records from a valid patient without records', async () => {
+        const records = await patientsModel.getRecordById(mockData.fakePatientIds[2])
+        expect(records.records).toHaveLength(0)
+    })
+
+    test('should return null from a non valid patient', async () => {
+        const records = await patientsModel.getRecordById(1000)
+        expect(records.result).toBeNull()
+        expect(records.name).not.toBeDefined()
+    })
+
+    test('should search a patient by keyword', async () => {
+        const patients = await patientsModel.getBy({ keyword: mockData.fakePatientName[1] })
+        expect(patients).toHaveLength(1)
+        expect(patients[0].country).toBeDefined()
     })
 
 

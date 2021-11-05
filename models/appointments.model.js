@@ -2,7 +2,7 @@ const { getById } = require('./patients.model');
 
 let appointmentId = 1000
 
-const getAppointById = async (id) => {
+const getAppointmentsByPatientId = async (id) => {
     let appoints = []
     const appointmentsTable = db.getCollection('appointments')
     const doctorsTable = db.getCollection('doctors')
@@ -24,43 +24,61 @@ const getAppointById = async (id) => {
 
 const addNewAppointment = async (patientId, date, doctorId) => {
     const patient = await getById(patientId)
-    if (patient) {
-        const appointmentTable = db.getCollection('appointments')
-        appointmentTable.insert({
+    const doctorsTable = db.getCollection('doctors')
+    const doctor = doctorsTable.findOne({ id: doctorId })
+
+    if (patient && doctor) {
+        const appointmentsTable = db.getCollection('appointments')
+        appointmentsTable.insert({
             id: appointmentId++,
             patientId: parseInt(patientId),
             pickedDate: date,
             doctorId: parseInt(doctorId)
         })
-        return true
+        return { result: true }
     }
-    return false
+    const message = !patient ? `The patientId ${patientId} does not exist` :
+        `The doctorId ${doctorId} does not exists`
+    return {
+        result: false,
+        message: message
+    }
 }
 
 const changeAppointment = async (patientId, date, appId, doctorId) => {
-    const patient = await getById(patientId)
-    if (patient) {
-        const appointmentTable = db.getCollection('appointments')
-        let appoint = appointmentTable.findOne({ id: parseInt(appId) })
+    const appointmentTable = db.getCollection('appointments')
+    let appoint = appointmentTable.findOne({ id: parseInt(appId) })
+    if (!appoint) {
+        return {
+            result: false,
+            message: "This appointment " + appId + " doesn't exist for patient " + patientId
+        }
+    }
+    if (appoint.patientId === parseInt(patientId)) {
         appoint.pickedDate = date
         appoint.doctorId = parseInt(doctorId)
         appointmentTable.update(appoint)
-        return true
+        return { result: true }
     }
-    return false
+    return { result: false }
 }
 
 const deleteAppointment = async (id, appId) => {
-    const patient = await getById(id)
-    const appointments = await getAppointById(id)
-    if (patient && appointments) {
-        const appointmentTable = db.getCollection('appointments')
-        let appoint = appointmentTable.findOne({ id: parseInt(appId) })
-        appointmentTable.remove(appoint)
-        return true
+    const appointmentTable = db.getCollection('appointments')
+    let appoint = appointmentTable.findOne({ id: parseInt(appId) })
+    if (!appoint) {
+        return {
+            result: false,
+            message: "This appointment " + appId + " doesn't exist for patient " + id
+        }
     }
-    return false
+    if (appoint.patientId === parseInt(id)) {
+        appointmentTable.remove(appoint)
+        return { result: true }
+    }
+    return { result: false }
 }
 
 
-module.exports = { getAppointById, addNewAppointment, changeAppointment, deleteAppointment }
+
+module.exports = { getAppointmentsByPatientId, addNewAppointment, changeAppointment, deleteAppointment }

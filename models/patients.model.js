@@ -50,7 +50,7 @@ const getRecordById = async (id) => {
             records: records
         }
     }
-    return null
+    return { result: null }
 }
 
 const addNewRecord = async (id, diagnostic, description) => {

@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { getAll, getBy, getById, getRecordById, addNewRecord, getOptions } = require('../../models/patients.model');
-const { getAppointById, addNewAppointment, changeAppointment, deleteAppointment } = require('../../models/appointments.model');
+const { getAppointmentsByPatientId, addNewAppointment, changeAppointment, deleteAppointment } = require('../../models/appointments.model');
 const { authenticateToken } = require('../../middleware/tokenAuthentication');
 const dayjs = require('dayjs');
 
@@ -68,7 +68,7 @@ router.get('/', authenticateToken, async (req, res) => {
 
 router.get('/:id/appointments', authenticateToken, async (req, res) => {
     try {
-        const patient = await getAppointById(req.params.id)
+        const patient = await getAppointmentsByPatientId(req.params.id)
         if (patient) {
             res.json(patient)
         } else {
