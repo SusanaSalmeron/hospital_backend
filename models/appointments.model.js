@@ -79,6 +79,11 @@ const deleteAppointment = async (id, appId) => {
     return { result: false }
 }
 
+const getDoctors = async () => {
+    const doctorsTable = db.getCollection("doctors")
+    return doctorsTable.find(true)
+}
 
 
-module.exports = { getAppointmentsByPatientId, addNewAppointment, changeAppointment, deleteAppointment }
+
+module.exports = { getAppointmentsByPatientId, addNewAppointment, changeAppointment, deleteAppointment, getDoctors }

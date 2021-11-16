@@ -3,11 +3,24 @@ const dayjs = require('dayjs');
 
 const getAll = async () => {
     const patientsTable = db.getCollection('patients')
-    return patientsTable.find(true)
+    const clinicalRecordsTable = db.getCollection('clinicalRecords')
+    const patients = patientsTable.find(true)
+    try {
+        const patientsDiagnostics = patients.map(patient => {
+            const records = clinicalRecordsTable.find({ id: patient.id })
+            const lastDiagnostics = records.length >= 1 ? records[0].diagnostics : "none"
+            patient.diagnostics = lastDiagnostics
+            return patient
+        })
+        return patientsDiagnostics
+    } catch (err) {
+        console.log(err)
+    }
 }
 
 const getBy = async (params) => {
     let { keyword } = params
+    console.log(keyword)
     keyword = keyword.toLowerCase()
     const patientsTable = db.getCollection('patients')
     let foundPatients = patientsTable.find({
@@ -25,7 +38,7 @@ const getBy = async (params) => {
     let otherPatients = []
     try {
         let records = clinicalRecordsTable.find({ diagnostics: { '$regex': [keyword, 'i'] } })
-        otherPatients = records.map(record => patientTable.findOne({ id: record.id }))
+        otherPatients = records.map(record => patientsTable.findOne({ id: record.id }))
     } catch (err) {
         console.log(err)
     }
@@ -47,6 +60,8 @@ const getRecordById = async (id) => {
         return {
             name: patient.name,
             address: patient.address,
+            company: patient.company,
+            dob: patient.dob,
             records: records
         }
     }
@@ -63,14 +78,10 @@ const addNewRecord = async (id, diagnostic, description) => {
             description: description,
             date: dayjs().format('DD-MM-YYYY')
         })
-        return true
+        return { result: true }
     }
-    return false
+    return { result: false }
 }
 
-const getOptions = async (diagnostics) => {
-    diagnostics = patients.map(diagnostic => diagnostic.map(d => d.split('')))
 
-}
-
-module.exports = { getAll, getBy, getById, getRecordById, addNewRecord, getOptions };
+module.exports = { getAll, getBy, getById, getRecordById, addNewRecord };

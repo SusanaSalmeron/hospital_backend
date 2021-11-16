@@ -1,13 +1,12 @@
 const router = require('express').Router();
 const { getAll, getBy, getById, getRecordById, addNewRecord, getOptions } = require('../../models/patients.model');
-const { getAppointmentsByPatientId, addNewAppointment, changeAppointment, deleteAppointment } = require('../../models/appointments.model');
+const { getAppointmentsByPatientId, addNewAppointment, changeAppointment, deleteAppointment, getDoctors } = require('../../models/appointments.model');
 const { authenticateToken } = require('../../middleware/tokenAuthentication');
 const dayjs = require('dayjs');
 
 
 router.get('/:id', authenticateToken, async (req, res) => {
     try {
-        //Es aqui???
         const id = req.params.id
         console.log("Aqui sale un " + id)
         const patient = await getById(id)
@@ -72,8 +71,22 @@ router.get('/:id/appointments', authenticateToken, async (req, res) => {
         if (patient) {
             res.json(patient)
         } else {
-            res.status(404).json({ error: "Id not found" })
+            res.status(404).json({ error: "Patient not found" })
         }
+    } catch (err) {
+        res.status(500).json({ error: "Internal Error" })
+    }
+})
+
+router.get('/appointments/doctors', authenticateToken, async (req, res) => {
+    try {
+        const doctors = await getDoctors()
+        if (doctors) {
+            res.json(doctors)
+        } else {
+            res.status(404).json({ error: "doctors not found" })
+        }
+
     } catch (err) {
         res.status(500).json({ error: "Internal Error" })
     }
