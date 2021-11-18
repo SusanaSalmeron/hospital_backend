@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { getAll, getBy, getById, getRecordById, addNewRecord, getOptions } = require('../../models/patients.model');
+const { getAll, getBy, getById, getRecordById, addNewRecord, getDiseases } = require('../../models/patients.model');
 const { getAppointmentsByPatientId, addNewAppointment, changeAppointment, deleteAppointment, getDoctors } = require('../../models/appointments.model');
 const { authenticateToken } = require('../../middleware/tokenAuthentication');
 const dayjs = require('dayjs');
@@ -92,6 +92,21 @@ router.get('/appointments/doctors', authenticateToken, async (req, res) => {
     }
 })
 
+router.get('/record/diseases', authenticateToken, async (req, res) => {
+    try {
+        const diseases = await getDiseases()
+        if (diseases) {
+            res.json(diseases)
+        } else {
+            res.status(404).json({ error: "diseases not found" })
+        }
+
+    } catch (err) {
+        res.status(500).json({ error: "Internal Error" })
+    }
+
+})
+
 router.post('/:id/record/add', authenticateToken, async (req, res) => {
     const { diagnostics, description } = req.body
     const { id } = req.params
@@ -152,9 +167,6 @@ router.delete('/:id/appointments/:appId', authenticateToken, async (req, res) =>
         res.status(500).json({ error: "Internal Error" })
     }
 })
-
-
-
 
 
 module.exports = router;

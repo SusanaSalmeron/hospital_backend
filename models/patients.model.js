@@ -74,7 +74,7 @@ const addNewRecord = async (id, diagnostic, description) => {
         const recordsTable = db.getCollection('clinicalRecords')
         recordsTable.insert({
             id: parseInt(id),
-            diagnostic: diagnostic,
+            diagnostics: diagnostic,
             description: description,
             date: dayjs().format('DD-MM-YYYY')
         })
@@ -83,5 +83,10 @@ const addNewRecord = async (id, diagnostic, description) => {
     return { result: false }
 }
 
+const getDiseases = async () => {
+    const diseasesTable = db.getCollection('diseases')
+    return diseasesTable.find(true).map(doc => doc.name)
+}
 
-module.exports = { getAll, getBy, getById, getRecordById, addNewRecord };
+
+module.exports = { getAll, getBy, getById, getRecordById, addNewRecord, getDiseases };
