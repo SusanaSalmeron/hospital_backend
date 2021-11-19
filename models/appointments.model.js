@@ -13,7 +13,9 @@ const getAppointmentsByPatientId = async (id) => {
             return {
                 id: app.id,
                 pickedDate: app.pickedDate,
-                doctor: doc.name
+                doctor: doc.name,
+                doctorId: doc.id
+
             }
         })
     } catch (err) {
@@ -26,7 +28,6 @@ const addNewAppointment = async (patientId, date, doctorId) => {
     const patient = await getById(patientId)
     const doctorsTable = db.getCollection('doctors')
     const doctor = doctorsTable.findOne({ id: doctorId })
-
     if (patient && doctor) {
         const appointmentsTable = db.getCollection('appointments')
         appointmentsTable.insert({
