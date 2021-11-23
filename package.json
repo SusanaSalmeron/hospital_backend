@@ -19,8 +19,10 @@
     "faker": "^5.5.3",
     "http-errors": "~1.6.3",
     "jsonwebtoken": "^8.5.1",
+    "loglevel": "^1.8.0",
     "lokijs": "^1.5.12",
     "morgan": "~1.9.1",
+    "npmlog": "^6.0.0",
     "pug": "^3.0.2"
   },
   "devDependencies": {

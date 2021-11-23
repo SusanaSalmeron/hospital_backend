@@ -15,7 +15,6 @@ const getAppointmentsByPatientId = async (id) => {
                 pickedDate: app.pickedDate,
                 doctor: doc.name,
                 doctorId: doc.id
-
             }
         })
     } catch (err) {
