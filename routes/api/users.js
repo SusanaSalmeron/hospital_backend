@@ -2,8 +2,10 @@ const router = require('express').Router();
 const log = require('npmlog');
 const { getUserByEmail } = require('../../models/users.model')
 const { createToken } = require('../../services/tokenService')
-const { checkValidEmail } = require('../../services/registerValidateService')
-const { signUpUser } = require('../../models/users.model')
+const { signUp } = require('../../models/users.model')
+const { validateEmail } = require('../../services/validateEmail')
+const { validatePassword } = require('../../services/validatePassword')
+const { addPatientToDB } = require('../../models/patients.model')
 
 
 //Login
@@ -33,18 +35,35 @@ router.post('/login', (req, res) => {
 
 router.post('/register', (req, res) => {
     try {
-        const foundValidUserEmail = checkValidEmail(req.body.email)
-        if (foundValidUserEmail) {
+        const emailValidated = validateEmail(req.body.email)
+        const passwordValidated = validatePassword(req.body.password)
+        if (emailValidated && passwordValidated) {
+            const { email, password, name } = req.body
             //signup
-            const user = signUpUser(req.body.email, req.body.password, req.body.name)
-            //create token
-            const token = createToken(user)
-            //return response
-            log.info('register', 'user create successfully')
-            res.status(201).json({ token: token, id: user.id });
+            const newId = signUp(email, password, name)
+            if (newId) {
+                addPatientToDB(newId, name, email)
+                //create token
+                const user = {
+                    name: name,
+                    role: "patient",
+                    email: email,
+                }
+                const token = createToken(user)
+                //return response
+                log.info('register', 'user create successfully')
+                res.status(201).json({
+                    name: user.name,
+                    token: token,
+                    id: newId
+                });
+            } else {
+                log.error('register', "Email already exists")
+                return res.status(400).json({ error: "Email already exists" });
+            }
         } else {
-            log.error('register', "Email already exists")
-            return res.status(400).json({ error: "Email already exists" });
+            log.error('register', "Email and/or password not validated")
+            return res.status(400).json({ error: "Email and/or password not validated" });
         }
     } catch (err) {
         log.error('register', "Internal Error", err)

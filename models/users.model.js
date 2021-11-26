@@ -1,6 +1,3 @@
-const { validateEmail } = require('../services/validateEmail')
-const { validatePassword } = require('../services/validatePassword')
-
 let userId = 10040
 
 const getUserByEmail = (email) => {
@@ -9,21 +6,26 @@ const getUserByEmail = (email) => {
     return foundUser
 }
 
-const signUpUser = (userEmail, userPassword, userName) => {
-    const emailValidated = validateEmail(userEmail)
-    const passwordValidated = validatePassword(userPassword)
-    if (emailValidated && passwordValidated) {
-        const usersTable = db.getCollection('users')
+const signUp = (userEmail, userPassword, userName) => {
+    const usersTable = db.getCollection('users')
+    const foundUser = usersTable.findOne({ email: userEmail })
+    if (!foundUser) {
+        //COMO reutilizamos un valor? pues sacandolo fuera!!!!
+        const newUserId = userId++
         usersTable.insert({
             name: userName,
             password: userPassword,
             email: userEmail,
             role: "patient",
-            id: userId++
+            id: newUserId // <----- AQUI, pero es un autoincremental!!, asi no nos vale para poder leerlo, NECESITAMOS REUSARLO!! 
+            //que hacemos cuando tenemos que reusar un valor??, pues refactorizar
         })
-        return { result: true }
+        // Found user no existe!! si estas en esta linea de codigo, porqyue si existe nunca hubieras entrado, has puesto esto asi sin leer que es lo que te digo siempre
+        //Donde esta el user Id??
+        return newUserId
+
     }
-    return { result: false }
+    return null
 }
 
-module.exports = { getUserByEmail, signUpUser };
+module.exports = { getUserByEmail, signUp };

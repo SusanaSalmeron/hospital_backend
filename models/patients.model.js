@@ -68,6 +68,25 @@ const getRecordById = async (id) => {
     return { result: null }
 }
 
+const addPatientToDB = async (id, name, email) => {
+    const patientTable = db.getCollection("patients")
+    patientTable.insert(
+        {
+            name: name,
+            address: "",
+            email: email,
+            postalZip: "",
+            region: "",
+            country: "",
+            phone: "",
+            id: id,
+            dob: "",
+            ssnumber: "",
+            company: ""
+        }
+    )
+}
+
 const addNewRecord = async (id, diagnostic, description) => {
     const patient = await getById(id)
     if (patient) {
@@ -89,4 +108,4 @@ const getDiseases = async () => {
 }
 
 
-module.exports = { getAll, getBy, getById, getRecordById, addNewRecord, getDiseases };
+module.exports = { getAll, getBy, getById, getRecordById, addNewRecord, getDiseases, addPatientToDB };

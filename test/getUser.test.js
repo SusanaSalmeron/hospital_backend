@@ -26,4 +26,6 @@ describe('manage users', () => {
         const user = userModel.getUserByEmail("lalala@pio.com")
         expect(user).toBeNull()
     })
+
+
 })

@@ -1,5 +1,5 @@
 const patientModel = require('../models/patients.model');
-const { dataForRecordTests, dataForRecordsTests } = require('../mocks/mocksForRecords')
+const { dataForRecordsTests } = require('../mocks/mocksForRecords')
 const loki = require('lokijs');
 
 describe('manage patients records', () => {
