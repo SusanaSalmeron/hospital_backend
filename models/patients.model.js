@@ -68,21 +68,21 @@ const getRecordById = async (id) => {
     return { result: null }
 }
 
-const addPatientToDB = async (id, name, email) => {
+const addPatientToDB = async (id, name, email, address, postalZip, region, country, phone, dob, ssnumber, company) => {
     const patientTable = db.getCollection("patients")
     patientTable.insert(
         {
             name: name,
-            address: "",
+            address: address,
             email: email,
-            postalZip: "",
-            region: "",
-            country: "",
-            phone: "",
+            postalZip: postalZip,
+            region: region,
+            country: country,
+            phone: phone,
             id: id,
-            dob: "",
-            ssnumber: "",
-            company: ""
+            dob: dob,
+            ssnumber: ssnumber,
+            company: company
         }
     )
 }

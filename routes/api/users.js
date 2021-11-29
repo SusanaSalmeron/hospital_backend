@@ -38,11 +38,11 @@ router.post('/register', (req, res) => {
         const emailValidated = validateEmail(req.body.email)
         const passwordValidated = validatePassword(req.body.password)
         if (emailValidated && passwordValidated) {
-            const { email, password, name } = req.body
+            const { email, password, name, address, postalZip, region, country, phone, dob, ssnumber, company } = req.body
             //signup
             const newId = signUp(email, password, name)
             if (newId) {
-                addPatientToDB(newId, name, email)
+                addPatientToDB(newId, name, email, address, postalZip, region, country, phone, dob, ssnumber, company)
                 //create token
                 const user = {
                     name: name,
