@@ -1,9 +1,28 @@
 const router = require('express').Router();
 const log = require('npmlog')
-const { getAll, getBy, getById, getRecordById, addNewRecord, getDiseases } = require('../../models/patients.model');
+const { getAll, getBy, getById, getRecordById, addNewRecord, getDiseases, modifyPatientData } = require('../../models/patients.model');
 const { getAppointmentsByPatientId, addNewAppointment, changeAppointment, deleteAppointment, getDoctors } = require('../../models/appointments.model');
 const { authenticateToken } = require('../../middleware/tokenAuthentication');
 const dayjs = require('dayjs');
+const { name } = require('faker');
+
+router.put('/:id', authenticateToken, async (req, res) => {
+    const { id } = req.params
+    const { name, email, address, postalZip, region, country, phone, ssnumber, company } = req.body
+    try {
+        const newData = await modifyPatientData(id, name, email, address, postalZip, region, country, phone, ssnumber, company)
+        if (newData) {
+            log.info('modifyPatientData', 'patient data successfully modified')
+            res.status(200).send()
+        } else {
+            log.info('modifyPatientData', 'patient data not modified')
+            res.status(404).json({ error: "no patient found" })
+        }
+    } catch (err) {
+        log.error('modifyPatientData', 'Internal Error', err)
+        res.status(500).json({ error: "internal error" })
+    }
+})
 
 
 router.get('/:id', authenticateToken, async (req, res) => {
@@ -153,6 +172,8 @@ router.post('/:id/appointments/add', authenticateToken, async (req, res) => {
     }
 })
 
+
+
 router.put('/:id/appointments/:appId', authenticateToken, async (req, res) => {
     const { pickedDate, doctor } = req.body
     let date = dayjs(pickedDate).format('DD/MM/YYYY')
@@ -168,6 +189,8 @@ router.put('/:id/appointments/:appId', authenticateToken, async (req, res) => {
         res.status(500).json({ error: "Internal Error" })
     }
 })
+
+
 
 router.delete('/:id/appointments/:appId', authenticateToken, async (req, res) => {
     const { id, appId } = req.params

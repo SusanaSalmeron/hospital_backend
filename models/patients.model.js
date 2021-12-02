@@ -107,5 +107,26 @@ const getDiseases = async () => {
     return diseasesTable.find(true).map(doc => doc.name)
 }
 
+const modifyPatientData = async (patientId, patientName, email, address, postalZip, region, country, phone, ssnumber, company) => {
+    const patientTable = db.getCollection('patients')
+    let patient = patientTable.findOne({ id: parseInt(patientId) })
+    if (!patient) {
+        return {
+            result: false,
+            message: "This patient doesn't exist"
+        }
+    }
+    patient.name = patientName
+    patient.email = email
+    patient.address = address
+    patient.postalZip = postalZip
+    patient.region = region
+    patient.country = country
+    patient.phone = phone
+    patient.ssnumber = ssnumber
+    patient.company = company
+    return patientTable.update(patient)
+}
 
-module.exports = { getAll, getBy, getById, getRecordById, addNewRecord, getDiseases, addPatientToDB };
+
+module.exports = { getAll, getBy, getById, getRecordById, addNewRecord, getDiseases, addPatientToDB, modifyPatientData };

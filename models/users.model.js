@@ -23,4 +23,6 @@ const signUp = (userEmail, userPassword, userName) => {
     return null
 }
 
+
+
 module.exports = { getUserByEmail, signUp };

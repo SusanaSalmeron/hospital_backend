@@ -5,7 +5,8 @@ const { createToken } = require('../../services/tokenService')
 const { signUp } = require('../../models/users.model')
 const { validateEmail } = require('../../services/validateEmail')
 const { validatePassword } = require('../../services/validatePassword')
-const { addPatientToDB } = require('../../models/patients.model')
+const { addPatientToDB } = require('../../models/patients.model');
+
 
 
 //Login
@@ -71,6 +72,7 @@ router.post('/register', (req, res) => {
     }
 
 })
+
 
 
 
