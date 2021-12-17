@@ -17,6 +17,7 @@ const getAppointmentsByPatientId = async (id) => {
                 doctorId: doc.id
             }
         })
+
     } catch (err) {
         console.log(err)
     }
@@ -81,9 +82,22 @@ const deleteAppointment = async (id, appId) => {
 
 const getDoctors = async () => {
     const doctorsTable = db.getCollection("doctors")
-    return doctorsTable.find(true)
+    let doctors = doctorsTable.find(true)
+    return doctors.map(doctor => {
+        return {
+            id: doctor.id,
+            name: doctor.name,
+            email: doctor.email,
+            speciality: doctor.speciality
+        }
+    })
+}
+
+const getAllAppointmentsFromDoctor = async (doctorId) => {
+    const appointmentsTable = db.getCollection("appointments")
+    return appointmentsTable.find({ doctorId: parseInt(doctorId) })
+
 }
 
 
-
-module.exports = { getAppointmentsByPatientId, addNewAppointment, changeAppointment, deleteAppointment, getDoctors }
+module.exports = { getAppointmentsByPatientId, addNewAppointment, changeAppointment, deleteAppointment, getDoctors, getAllAppointmentsFromDoctor }

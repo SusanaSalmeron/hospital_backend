@@ -2,7 +2,6 @@ const userModel = require('../models/users.model');
 const { dataForUsersTests } = require('../mocks/mocksForUsers')
 const faker = require('faker');
 const loki = require('lokijs');
-const log = require('npmlog');
 
 describe('manage register', () => {
     let mockData

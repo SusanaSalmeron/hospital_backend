@@ -3,6 +3,7 @@ let userId = 10040
 const getUserByEmail = (email) => {
     const users = db.getCollection('users')
     const foundUser = users.findOne({ email: email })
+    console.log(foundUser)
     return foundUser
 }
 

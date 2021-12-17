@@ -10,7 +10,20 @@ const getAll = async () => {
             const records = clinicalRecordsTable.find({ id: patient.id })
             const lastDiagnostics = records.length >= 1 ? records[0].diagnostics : "none"
             patient.diagnostics = lastDiagnostics
-            return patient
+            return {
+                name: patient.name,
+                address: patient.address,
+                email: patient.email,
+                postalZip: patient.postalZip,
+                region: patient.region,
+                country: patient.country,
+                phone: patient.phone,
+                id: patient.id,
+                dob: patient.dob,
+                ssnumber: patient.ssnumber,
+                company: patient.company,
+                diagnostics: patient.diagnostics
+            }
         })
         return patientsDiagnostics
     } catch (err) {
@@ -43,13 +56,42 @@ const getBy = async (params) => {
         console.log(err)
     }
 
-    return foundPatients.concat(otherPatients)
+    let filteredPatient = foundPatients.concat(otherPatients)
+    return filteredPatient.map(fp => {
+        return {
+            name: fp.name,
+            address: fp.address,
+            email: fp.email,
+            postalZip: fp.postalZip,
+            region: fp.region,
+            country: fp.country,
+            phone: fp.phone,
+            id: fp.id,
+            dob: fp.dob,
+            ssnumber: fp.ssnumber,
+            company: fp.company,
+            diagnostics: fp.diagnostics
+        }
+    })
 }
 
 const getById = async (someId) => {
     const patientsTable = db.getCollection('patients')
     const patient = patientsTable.findOne({ id: parseInt(someId) })
-    return patient
+    return {
+        name: patient.name,
+        address: patient.address,
+        email: patient.email,
+        postalZip: patient.postalZip,
+        region: patient.region,
+        country: patient.country,
+        phone: patient.phone,
+        id: patient.id,
+        dob: patient.dob,
+        ssnumber: patient.ssnumber,
+        company: patient.company,
+        diagnostics: patient.diagnostics
+    }
 }
 
 const getRecordById = async (id) => {
@@ -62,7 +104,14 @@ const getRecordById = async (id) => {
             address: patient.address,
             company: patient.company,
             dob: patient.dob,
-            records: records
+            records: records.map(r => {
+                return {
+                    date: r.date,
+                    id: r.id,
+                    description: r.description,
+                    diagnostics: r.diagnostics
+                }
+            })
         }
     }
     return { result: null }

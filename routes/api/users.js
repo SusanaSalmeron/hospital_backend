@@ -60,7 +60,16 @@ router.post('/register', (req, res) => {
                 });
             } else {
                 log.error('register', "Email already exists")
-                return res.status(400).json({ error: "Email already exists" });
+                return res.status(400).json(
+                    {
+                        errors: [
+                            {
+                                message: "Email already exists",
+                                field: "email"
+                            }
+                        ]
+                    }
+                );
             }
         } else {
             log.error('register', "Email and/or password not validated")

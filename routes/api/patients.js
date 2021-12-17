@@ -4,7 +4,6 @@ const { getAll, getBy, getById, getRecordById, addNewRecord, getDiseases, modify
 const { getAppointmentsByPatientId, addNewAppointment, changeAppointment, deleteAppointment, getDoctors } = require('../../models/appointments.model');
 const { authenticateToken } = require('../../middleware/tokenAuthentication');
 const dayjs = require('dayjs');
-const { name } = require('faker');
 
 router.put('/:id', authenticateToken, async (req, res) => {
     const { id } = req.params
@@ -154,8 +153,8 @@ router.post('/:id/record/add', authenticateToken, async (req, res) => {
 })
 
 router.post('/:id/appointments/add', authenticateToken, async (req, res) => {
-    const { calendar, doctor } = req.body
-    let date = dayjs(calendar).format('DD/MM/YYYY')
+    const { pickedDate, doctor } = req.body
+    let date = pickedDate
     const { id } = req.params
     try {
         const appointmentAdded = await addNewAppointment(id, date, doctor)
