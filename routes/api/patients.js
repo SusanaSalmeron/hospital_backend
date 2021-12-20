@@ -2,7 +2,7 @@ const router = require('express').Router();
 const log = require('npmlog')
 const { getAll, getBy, getById, getRecordById, addNewRecord, getDiseases, modifyPatientData } = require('../../models/patients.model');
 const { getAppointmentsByPatientId, addNewAppointment, changeAppointment, deleteAppointment, getDoctors } = require('../../models/appointments.model');
-const { authenticateToken } = require('../../middleware/tokenAuthentication');
+const { authenticateToken, authorizeDoctor } = require('../../middleware/tokenAuthentication');
 const dayjs = require('dayjs');
 
 router.put('/:id', authenticateToken, async (req, res) => {
@@ -62,7 +62,7 @@ router.get('/:id/record', authenticateToken, async (req, res) => {
     }
 })
 
-router.get('/', authenticateToken, async (req, res) => {
+router.get('/', authenticateToken, authorizeDoctor, async (req, res) => {
     try {
         let patients;
         if (req.query.keyword) {

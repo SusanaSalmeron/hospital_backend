@@ -11,7 +11,7 @@ const authenticateToken = (req, res, next) => {
         jwt.verify(token, secretToken, (err, payload) => {
             console.log(err)
             if (err) {
-                return res.sendStatus(403);
+                return res.status(403).json({ error: "Invalid Token" });
             }
             console.log("Token verified")
             req.role = payload.role
@@ -19,10 +19,19 @@ const authenticateToken = (req, res, next) => {
         });
     }
     else {
-        res.sendStatus(401);
+        res.status(401).json({ error: "Unauthorized" });
     }
 }
 
-module.exports = { authenticateToken }
+const authorizeDoctor = (req, res, next) => {
+    const role = req.role
+    if (role === "sanitario") {
+        next()
+    } else {
+        return res.status(403).json({ error: "User is not authorized" });
+    }
+}
+
+module.exports = { authenticateToken, authorizeDoctor }
 
 

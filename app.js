@@ -5,8 +5,23 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
 const dotenv = require('dotenv');
+/* const swaggerAutogen = require('swagger-autogen')(); */
+/* const swaggerUi = require('swagger-ui-express'); */
 
 
+/* const doc = {
+  info: {
+    title: 'Hospital',
+    description: 'Hospital app'
+  },
+  host: 'localhost:3001',
+  schemes: ['http'],
+}; */
+
+/* const outputFile = './swagger-output.json';
+const endpointsFile = ['./app.js']
+
+swaggerAutogen(outputFile, endpointsFile, doc) */
 
 dotenv.config()
 
@@ -29,7 +44,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+/* app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerSpec, { explorer: true })); */
 app.use('/', indexRouter);
 app.use('/api', apiRouter);
 

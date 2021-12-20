@@ -3,8 +3,18 @@ let userId = 10040
 const getUserByEmail = (email) => {
     const users = db.getCollection('users')
     const foundUser = users.findOne({ email: email })
-    console.log(foundUser)
-    return foundUser
+    if (foundUser) {
+        return {
+            name: foundUser.name,
+            password: foundUser.password,
+            email: foundUser.email,
+            role: foundUser.role,
+            id: foundUser.id,
+        }
+    } else {
+        return null
+    }
+
 }
 
 const signUp = (userEmail, userPassword, userName) => {

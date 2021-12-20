@@ -15,10 +15,10 @@ router.post('/login', (req, res) => {
     try {
         const user = getUserByEmail(req.body.email);
         if (!user) {
-            log.error('login', 'Password and/or mail error')
-            return res.status(401).json({ error: "Password and/or mail error" });
+            log.error('login', 'User does not exist')
+            res.status(404).send({ error: "User does not exist" });
         }
-        if (req.body.password === user.password) {
+        else if (req.body.password === user.password) {
             log.info('login', 'login successfully')
             res.status(200).json({ name: user.name, token: createToken(user), id: user.id });
         } else {
