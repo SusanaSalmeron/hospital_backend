@@ -95,7 +95,17 @@ const getDoctors = async () => {
 
 const getAllAppointmentsFromDoctor = async (doctorId) => {
     const appointmentsTable = db.getCollection("appointments")
-    return appointmentsTable.find({ doctorId: parseInt(doctorId) })
+    const appointments = appointmentsTable.find({ doctorId: parseInt(doctorId) })
+    const patientTable = db.getCollection("patients")
+    return appointments.map(appoint => {
+        return {
+            id: appoint.id,
+            doctorId: appoint.doctorId,
+            patientId: appoint.patientId,
+            patientName: patientTable.findOne({ id: appoint.patientId }).name,
+            pickedDate: appoint.pickedDate
+        }
+    })
 
 }
 

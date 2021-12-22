@@ -2,18 +2,16 @@
 
 const router = require('express').Router();
 const log = require('npmlog')
-const { authenticateToken } = require('../../middleware/tokenAuthentication');
+const { authenticateToken, authorizeDoctor } = require('../../middleware/tokenAuthentication');
 const { getAllAppointmentsFromDoctor } = require('../../models/appointments.model')
 
 
 
 
-router.get('/:id/appointments', authenticateToken, async (req, res) => {
+router.get('/:id/appointments', authenticateToken, authorizeDoctor, async (req, res) => {
     try {
-        res.status(200)
         const { id } = req.params
         const appointments = await getAllAppointmentsFromDoctor(id)
-        console.log(appointments)
         if (appointments) {
             log.info("getAppointments", 'get appointments successfully')
             res.status(200).json(appointments)
