@@ -7,11 +7,16 @@ const { validateEmail } = require('../../services/validateEmail')
 const { validatePassword } = require('../../services/validatePassword')
 const { addPatientToDB } = require('../../models/patients.model');
 
-
-
-//Login
-
 router.post('/login', (req, res) => {
+    /* 	#swagger.tags = ['Users']
+      #swagger.description = 'Endpoint to user login' */
+
+    /*	#swagger.parameters['obj'] = {
+       in: 'body',
+       description:  'User credentials',
+       required: true,
+       schema: { $ref: '#/definitions/Login' }
+} */
     try {
         const user = getUserByEmail(req.body.email);
         if (!user) {
@@ -31,10 +36,16 @@ router.post('/login', (req, res) => {
     }
 })
 
-
-//Register
-
 router.post('/register', (req, res) => {
+    /* 	#swagger.tags = ['Users']
+      #swagger.description = 'Endpoint to register a new user' */
+
+    /*	#swagger.parameters['obj'] = {
+       in: 'body',
+       description:  'User data for signing up',
+       required: true,
+       schema: { $ref: '#/definitions/Register' }
+    } */
     try {
         const emailValidated = validateEmail(req.body.email)
         const passwordValidated = validatePassword(req.body.password)
@@ -79,10 +90,6 @@ router.post('/register', (req, res) => {
         log.error('register', "Internal Error", err)
         res.status(500).json({ error: "Internal Error" })
     }
-
 })
-
-
-
 
 module.exports = router;

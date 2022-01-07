@@ -5,10 +5,14 @@ const log = require('npmlog')
 const { authenticateToken, authorizeDoctor } = require('../../middleware/tokenAuthentication');
 const { getAllAppointmentsFromDoctor } = require('../../models/appointments.model')
 
-
-
-
 router.get('/:id/appointments', authenticateToken, authorizeDoctor, async (req, res) => {
+    /* 	#swagger.tags = ['Doctors']
+      #swagger.description = 'Endpoint to get all appoitments from a doctor' */
+    /*	#swagger.parameters['id'] = {
+            in: 'path',
+            description:  'id from doctor',
+            required: true
+    } */
     try {
         const { id } = req.params
         const appointments = await getAllAppointmentsFromDoctor(id)
@@ -24,9 +28,5 @@ router.get('/:id/appointments', authenticateToken, authorizeDoctor, async (req, 
         res.status(500).json({ error: "internal Error" })
     }
 })
-
-
-
-
 
 module.exports = router;

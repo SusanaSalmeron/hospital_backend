@@ -1,19 +1,19 @@
 const jwt = require('jsonwebtoken');
+const log = require('npmlog')
 
 const secretToken = process.env.SECRET_TOKEN;
 
 const authenticateToken = (req, res, next) => {
     const authHeader = req.headers.authorization;
-    console.log("Request reach before checking token")
+    log.verbose("Request reach before checking token")
     if (authHeader) {
-        console.log("Token secret is " + secretToken)
         const token = authHeader.split(' ')[1];
         jwt.verify(token, secretToken, (err, payload) => {
-            console.log(err)
             if (err) {
+                log.error(err)
                 return res.status(403).json({ error: "Invalid Token" });
             }
-            console.log("Token verified")
+            log.info("Token verified")
             req.role = payload.role
             next();
         });
@@ -28,6 +28,7 @@ const authorizeDoctor = (req, res, next) => {
     if (role === "sanitario") {
         next()
     } else {
+        log.error('User is not authorized')
         return res.status(403).json({ error: "User is not authorized" });
     }
 }

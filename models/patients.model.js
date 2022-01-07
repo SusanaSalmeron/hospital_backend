@@ -33,7 +33,6 @@ const getAll = async () => {
 
 const getBy = async (params) => {
     let { keyword } = params
-    console.log(keyword)
     keyword = keyword.toLowerCase()
     const patientsTable = db.getCollection('patients')
     let foundPatients = patientsTable.find({
@@ -78,19 +77,23 @@ const getBy = async (params) => {
 const getById = async (someId) => {
     const patientsTable = db.getCollection('patients')
     const patient = patientsTable.findOne({ id: parseInt(someId) })
-    return {
-        name: patient.name,
-        address: patient.address,
-        email: patient.email,
-        postalZip: patient.postalZip,
-        region: patient.region,
-        country: patient.country,
-        phone: patient.phone,
-        id: patient.id,
-        dob: patient.dob,
-        ssnumber: patient.ssnumber,
-        company: patient.company,
-        diagnostics: patient.diagnostics
+    if (patient) {
+        return {
+            name: patient.name,
+            address: patient.address,
+            email: patient.email,
+            postalZip: patient.postalZip,
+            region: patient.region,
+            country: patient.country,
+            phone: patient.phone,
+            id: patient.id,
+            dob: patient.dob,
+            ssnumber: patient.ssnumber,
+            company: patient.company,
+            diagnostics: patient.diagnostics
+        }
+    } else {
+        return null
     }
 }
 

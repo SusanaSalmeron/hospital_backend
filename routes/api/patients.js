@@ -5,7 +5,71 @@ const { getAppointmentsByPatientId, addNewAppointment, changeAppointment, delete
 const { authenticateToken, authorizeDoctor } = require('../../middleware/tokenAuthentication');
 const dayjs = require('dayjs');
 
+//Patient related operations
+router.get('/', authenticateToken, authorizeDoctor, async (req, res) => {
+    /* 	#swagger.tags = ['Patients']
+        #swagger.description = 'Endpoint to get patients by keyword' */
+
+    /*	#swagger.parameters['keyword'] = {
+            in: 'query',
+            description: 'Key word to search for any patients',
+            required: false
+    } */
+    try {
+        let patients;
+        if (req.query.keyword) {
+            patients = await getBy(req.query);
+        } else {
+            patients = await getAll();
+        }
+        log.info('getPatients', 'get patients successfully')
+        res.json(patients)
+    } catch (err) {
+        log.error('getPatients', 'Internal Error', err)
+        res.status(500).json({ error: 'Internal Error' })
+    }
+})
+
+router.get('/:id', authenticateToken, async (req, res) => {
+    /* 	#swagger.tags = ['Patients']
+        #swagger.description = 'Endpoint to get patients by id' */
+
+    /*	#swagger.parameters['id'] = {
+            in: 'path',
+            description: 'Id for a patient',
+            required: true
+    } */
+    try {
+        const id = req.params.id
+        const patient = await getById(id)
+        if (patient) {
+            log.info('getPatientById', 'get user successfully')
+            res.json(patient)
+        } else {
+            log.error('getPatientById', 'Id not found')
+            res.status(404).json({ error: "Id not found" })
+        }
+    } catch (err) {
+        log.error('getPatientById', 'Internal Error', err)
+        res.status(500).json({ error: "Internal Error" })
+    }
+})
+
 router.put('/:id', authenticateToken, async (req, res) => {
+    /* 	#swagger.tags = ['Patients']
+      #swagger.description = 'Endpoint to modify data from a patient' */
+
+    /*	#swagger.parameters['id'] = {
+            in: 'path',
+            description:  'id from patient',
+            required: true
+    } */
+    /*	#swagger.parameters['obj'] = {
+           in: 'body',
+           description:  'patient data',
+           required: true,
+           schema: { $ref: '#/definitions/ModifyPatientData' }
+   } */
     const { id } = req.params
     const { name, email, address, postalZip, region, country, phone, ssnumber, company } = req.body
     try {
@@ -23,25 +87,103 @@ router.put('/:id', authenticateToken, async (req, res) => {
     }
 })
 
+// Patients' appointments operations 
+router.get('/:id/appointments', authenticateToken, async (req, res) => {
+    /* 	#swagger.tags = ['Patients']
+        #swagger.description = 'Endpoint to get appointments from a patient' */
 
-router.get('/:id', authenticateToken, async (req, res) => {
+    /*	#swagger.parameters['id'] = {
+            in: 'path',
+            description: 'Id for a patient',
+            required: true
+    } */
     try {
-        const id = req.params.id
-        const patient = await getById(id)
+        const patient = await getAppointmentsByPatientId(req.params.id)
         if (patient) {
-            log.info('getPatientById', 'get user successfully')
+            log.info('getAppointmentsByPatient', 'get appointments successfully')
             res.json(patient)
         } else {
-            log.error('getPatientById', 'Id not found')
-            res.status(404).json({ error: "Id not found" })
+            log.error('getAppoinmentsByPatient', 'Patient not found')
+            res.status(404).json({ error: "Patient not found" })
         }
     } catch (err) {
-        log.error('getPatientById', 'Internal Error', err)
+        log.error('getAppoinmentsByPatient', 'Internal Error', err)
         res.status(500).json({ error: "Internal Error" })
     }
 })
 
-router.get('/:id/record', authenticateToken, async (req, res) => {
+router.post('/:id/appointments', authenticateToken, async (req, res) => {
+    /* 	#swagger.tags = ['Patients']
+       #swagger.description = 'Endpoint to add an appointment to a patient' */
+
+    /*	#swagger.parameters['id'] = {
+          in: 'path',
+          description:  'Id for a patient',
+          required: true
+  } */
+
+    /*	#swagger.parameters['obj'] = {
+          in: 'body',
+          description:  'Id for a patient',
+          required: true,
+          schema: { $ref: '#/definitions/NewAppointment' }
+  } */
+
+    const { pickedDate, doctor } = req.body
+    let date = pickedDate
+    const { id } = req.params
+    try {
+        const appointmentAdded = await addNewAppointment(id, date, doctor)
+        if (appointmentAdded) {
+            log.info('addAppointment', 'add appointment successfully')
+            res.status(200).send();
+        } else {
+            log.error('addAppointment', 'no appointment')
+            res.status(404).json({ error: "No appointment" })
+        }
+    } catch (err) {
+        log.error('addAppointment', 'internal error', err)
+        res.status(500).json({ error: "Internal Error" })
+    }
+})
+
+router.delete('/:id/appointments/:appId', authenticateToken, async (req, res) => {
+    /* 	#swagger.tags = ['Patients']
+      #swagger.description = 'Endpoint to delete an appointment from a patient' */
+
+    /*	#swagger.parameters['id'] = {
+            in: 'path',
+            description:  'id from patient',
+            required: true
+    } */
+    /*	#swagger.parameters['appId'] = {
+            in: 'path',
+            description:  'id from an appointment',
+            required: true
+    } */
+    const { id, appId } = req.params
+    try {
+        const appointmentDeleted = await deleteAppointment(id, appId)
+        if (appointmentDeleted) {
+            log.info('deleteAppointment', 'delete appointment successfully')
+            res.status(200).send();
+        }
+    } catch (err) {
+        log.error('deleteAppointment', 'internal error', err)
+        res.status(500).json({ error: "Internal Error" })
+    }
+})
+
+// Patients' records operations
+router.get('/:id/records', authenticateToken, authorizeDoctor, async (req, res) => {
+    /* 	#swagger.tags = ['Patients']
+        #swagger.description = 'Endpoint to get clinical record from a patient' */
+
+    /*	#swagger.parameters['id'] = {
+            in: 'path',
+            description:  'Id for a patient',
+            required: true
+    } */
     if (req.role = "sanitario") {
         try {
             const record = await getRecordById(req.params.id)
@@ -62,74 +204,21 @@ router.get('/:id/record', authenticateToken, async (req, res) => {
     }
 })
 
-router.get('/', authenticateToken, authorizeDoctor, async (req, res) => {
-    try {
-        let patients;
-        if (req.query.keyword) {
-            patients = await getBy(req.query);
-        } else {
-            patients = await getAll();
-        }
-        log.info('getPatients', 'get patients successfully')
-        res.json(patients)
-    } catch (err) {
-        log.error('getPatients', 'Internal Error', err)
-        res.status(500).json({ error: 'Internal Error' })
-    }
-})
+router.post('/:id/records', authenticateToken, authorizeDoctor, async (req, res) => {
+    /* 	#swagger.tags = ['Patients']
+      #swagger.description = 'Endpoint to add a clinical record from a patient' */
+    /*	#swagger.parameters['id'] = {
+           in: 'path',
+           description:  'id from patient',
+           required: true
+   } */
+    /*	#swagger.parameters['payload'] = {
+      in: 'body',
+      description:  'Payload for creating a new record',
+      required: true,
+      schema: { $ref: '#/definitions/NewRecord' }
+    } */
 
-router.get('/:id/appointments', authenticateToken, async (req, res) => {
-    try {
-        const patient = await getAppointmentsByPatientId(req.params.id)
-        if (patient) {
-            log.info('getAppointmentsByPatient', 'get appointments successfully')
-            res.json(patient)
-        } else {
-            log.error('getAppoinmentsByPatient', 'Patient not found')
-            res.status(404).json({ error: "Patient not found" })
-        }
-    } catch (err) {
-        log.error('getAppoinmentsByPatient', 'Internal Error', err)
-        res.status(500).json({ error: "Internal Error" })
-    }
-})
-
-router.get('/appointments/doctors', authenticateToken, async (req, res) => {
-    try {
-        const doctors = await getDoctors()
-        if (doctors) {
-            log.info('getDoctors', 'get doctors successfully')
-            res.json(doctors)
-        } else {
-            log.error('getDoctors', 'doctors not found')
-            res.status(404).json({ error: "doctors not found" })
-        }
-
-    } catch (err) {
-        log.error('getDoctors', 'internal error', err)
-        res.status(500).json({ error: "Internal Error" })
-    }
-})
-
-router.get('/record/diseases', authenticateToken, async (req, res) => {
-    try {
-        const diseases = await getDiseases()
-        if (diseases) {
-            log.info('getDiseases', 'get diseases successfully')
-            res.json(diseases)
-        } else {
-            log.error('getDiseases', 'diseases not found')
-            res.status(404).json({ error: "diseases not found" })
-        }
-
-    } catch (err) {
-        log.error('getDiseases', 'internal error', err)
-        res.status(500).json({ error: "Internal Error" })
-    }
-
-})
-
-router.post('/:id/record/add', authenticateToken, async (req, res) => {
     const { diagnostics, description } = req.body
     const { id } = req.params
     if (req.role = "sanitario") {
@@ -151,59 +240,5 @@ router.post('/:id/record/add', authenticateToken, async (req, res) => {
         res.status(403).json({ error: "Forbidden" })
     }
 })
-
-router.post('/:id/appointments/add', authenticateToken, async (req, res) => {
-    const { pickedDate, doctor } = req.body
-    let date = pickedDate
-    const { id } = req.params
-    try {
-        const appointmentAdded = await addNewAppointment(id, date, doctor)
-        if (appointmentAdded) {
-            log.info('addAppointment', 'add appointment successfully')
-            res.status(200).send();
-        } else {
-            log.error('addAppointment', 'no appointment')
-            res.status(404).json({ error: "No appointment" })
-        }
-    } catch (err) {
-        log.error('addAppointment', 'internal error', err)
-        res.status(500).json({ error: "Internal Error" })
-    }
-})
-
-
-
-router.put('/:id/appointments/:appId', authenticateToken, async (req, res) => {
-    const { pickedDate, doctor } = req.body
-    let date = dayjs(pickedDate).format('DD/MM/YYYY')
-    const { id, appId } = req.params
-    try {
-        const appointmentModified = await changeAppointment(id, date, appId, doctor)
-        if (appointmentModified) {
-            log.info('modifyAppointment', 'modify appointment successfully')
-            res.status(200).send();
-        }
-    } catch (err) {
-        log.error('modifyAppointment', 'internal error', err)
-        res.status(500).json({ error: "Internal Error" })
-    }
-})
-
-
-
-router.delete('/:id/appointments/:appId', authenticateToken, async (req, res) => {
-    const { id, appId } = req.params
-    try {
-        const appointmentDeleted = await deleteAppointment(id, appId)
-        if (appointmentDeleted) {
-            log.info('deleteAppointment', 'delete appointment successfully')
-            res.status(200).send();
-        }
-    } catch (err) {
-        log.error('deleteAppointment', 'internal error', err)
-        res.status(500).json({ error: "Internal Error" })
-    }
-})
-
 
 module.exports = router;

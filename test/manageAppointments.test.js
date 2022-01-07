@@ -1,14 +1,17 @@
 const appointmentsModel = require('../models/appointments.model')
 const { dataForAppointmentsTests } = require('../mocks/mocksForAppointments')
+const { dataForDoctorsTest } = require('../mocks/mocksForDoctors')
 const loki = require('lokijs')
 const faker = require('faker')
 
 let mockData
+let mockDoctors
 
 describe('manage appointments', () => {
     beforeAll(() => {
         global.db = new loki('hospital.test.db');
         mockData = dataForAppointmentsTests()
+        mockDoctors = dataForDoctorsTest()
     })
     afterAll(() => {
         global.db.close()
@@ -88,4 +91,22 @@ describe('manage appointments', () => {
         let result = await appointmentsModel.deleteAppointment(8, 8)
         expect(result.result).toBeFalsy()
     })
+
+    test('should show all appointments from doctor', async () => {
+        let appointments = await appointmentsModel.getAllAppointmentsFromDoctor(mockData.fakeDoctorsIds[0])
+        expect(appointments[0].doctorId).toBeDefined()
+        expect(appointments[0].doctorId).toEqual(mockData.fakeDoctorsIds[0])
+    })
+
+    test('should not show any appointments from a non existent doctor', async () => {
+        let appointments = await appointmentsModel.getAllAppointmentsFromDoctor(10)
+        expect(appointments[0]).toBeFalsy()
+    })
+
+    test('get diseases from db', async () => {
+        const doctors = await appointmentsModel.getDoctors()
+        console.log(doctors)
+        expect(doctors).toBeDefined()
+    })
+
 })

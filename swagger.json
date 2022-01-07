@@ -1,0 +1,657 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Hospital",
+    "description": "Hospital app",
+    "version": "1.0.0"
+  },
+  "host": "localhost:3001",
+  "basePath": "/",
+  "tags": [],
+  "schemes": [
+    "http"
+  ],
+  "consumes": [],
+  "produces": [],
+  "paths": {
+    "/api-docs": {
+      "get": {
+        "tags": [],
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/v1/users/login": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Endpoint to user login",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "User credentials",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Login"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/v1/users/register": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Endpoint to register a new user",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "User data for signing up",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Register"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/v1/doctors/{id}/appointments": {
+      "get": {
+        "tags": [
+          "Doctors"
+        ],
+        "description": "Endpoint to get all appoitments from a doctor",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "id from doctor"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/v1/patients/": {
+      "get": {
+        "tags": [
+          "Patients"
+        ],
+        "description": "Endpoint to get patients by keyword",
+        "parameters": [
+          {
+            "name": "keyword",
+            "in": "query",
+            "description": "Key word to search for any patients",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/v1/patients/{id}": {
+      "get": {
+        "tags": [
+          "Patients"
+        ],
+        "description": "Endpoint to get patients by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Id for a patient"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Patients"
+        ],
+        "description": "Endpoint to modify data from a patient",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "id from patient"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "patient data",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ModifyPatientData"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/v1/patients/{id}/appointments": {
+      "get": {
+        "tags": [
+          "Patients"
+        ],
+        "description": "Endpoint to get appointments from a patient",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Id for a patient"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Patients"
+        ],
+        "description": "Endpoint to add an appointment to a patient",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Id for a patient"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Id for a patient",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/NewAppointment"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/v1/patients/{id}/appointments/{appId}": {
+      "delete": {
+        "tags": [
+          "Patients"
+        ],
+        "description": "Endpoint to delete an appointment from a patient",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "id from patient"
+          },
+          {
+            "name": "appId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "id from an appointment"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/v1/patients/{id}/records": {
+      "get": {
+        "tags": [
+          "Patients"
+        ],
+        "description": "Endpoint to get clinical record from a patient",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Id for a patient"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Patients"
+        ],
+        "description": "Endpoint to add a clinical record from a patient",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "id from patient"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "payload",
+            "in": "body",
+            "description": "Payload for creating a new record",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/NewRecord"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/v1/catalogs/doctors": {
+      "get": {
+        "tags": [
+          "Catalogs"
+        ],
+        "description": "Endpoint to get data from doctors",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/v1/catalogs/diseases": {
+      "get": {
+        "tags": [
+          "Catalogs"
+        ],
+        "description": "Endpoint to get all the diseases list",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "NewAppointment": {
+      "type": "object",
+      "properties": {
+        "pickedDate": {
+          "type": "string",
+          "example": "21/10/2022"
+        },
+        "doctor": {
+          "type": "number",
+          "example": 1
+        }
+      }
+    },
+    "NewRecord": {
+      "type": "object",
+      "properties": {
+        "diagnostics": {
+          "type": "string",
+          "example": "covid-20"
+        },
+        "description": {
+          "type": "string",
+          "example": "Cold related symptoms"
+        }
+      }
+    },
+    "Login": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "ipsum.dolor@ac.ca"
+        },
+        "password": {
+          "type": "string",
+          "example": "Password1"
+        }
+      }
+    },
+    "Register": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "ipsum.dolor@ac.ca"
+        },
+        "password": {
+          "type": "string",
+          "example": "Password1"
+        },
+        "name": {
+          "type": "string",
+          "example": "Chadwick Franco"
+        },
+        "address": {
+          "type": "string",
+          "example": "693-5132 Lorem. St."
+        },
+        "postalZip": {
+          "type": "string",
+          "example": "51648-71464"
+        },
+        "region": {
+          "type": "string",
+          "example": "Limon"
+        },
+        "country": {
+          "type": "string",
+          "example": "Indonesia"
+        },
+        "phone": {
+          "type": "string",
+          "example": "1-459-323-3148"
+        },
+        "dob": {
+          "type": "string",
+          "example": "17-01-1938"
+        },
+        "ssnumber": {
+          "type": "string",
+          "example": "7342553NV"
+        },
+        "company": {
+          "type": "string",
+          "example": "Augue Id Corporation"
+        }
+      }
+    },
+    "ModifyPatientData": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Chadwick Franco"
+        },
+        "email": {
+          "type": "string",
+          "example": "ipsum.dolor@ac.ca"
+        },
+        "address": {
+          "type": "string",
+          "example": "Calle Fuencarral 39"
+        },
+        "postalZip": {
+          "type": "string",
+          "example": "28004"
+        },
+        "region": {
+          "type": "string",
+          "example": "Madrid"
+        },
+        "country": {
+          "type": "string",
+          "example": "Spain"
+        },
+        "phone": {
+          "type": "string",
+          "example": "+34667438722"
+        },
+        "ssnumber": {
+          "type": "string",
+          "example": "7342553NV"
+        },
+        "company": {
+          "type": "string",
+          "example": "Augue Id Corporation"
+        }
+      }
+    }
+  }
+}

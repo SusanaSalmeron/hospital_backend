@@ -1,7 +1,7 @@
 const userModel = require('../models/users.model');
 const faker = require('faker')
-
 const loki = require('lokijs')
+
 let mockEmail = faker.internet.email()
 
 describe('manage users', () => {
