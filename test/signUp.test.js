@@ -24,7 +24,6 @@ describe('manage signUp', () => {
     })
     test('should sign up an existent user', () => {
         const user = userModel.signUp(mockEmail, mockPassword, mockName)
-        console.log(user)
         expect(user).toBeFalsy()
     })
 

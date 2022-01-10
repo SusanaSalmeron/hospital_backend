@@ -13,7 +13,6 @@ describe('manage patients records', () => {
     })
     test('should show a patient record by id', async () => {
         const record = await patientModel.getRecordById(mockData.fakePatientIds[2])
-        console.log(record.records)
         expect(record).toBeTruthy()
         expect(record.records).toBeDefined()
         expect(record.records).toHaveLength(1)

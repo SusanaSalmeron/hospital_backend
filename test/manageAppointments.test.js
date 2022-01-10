@@ -105,7 +105,6 @@ describe('manage appointments', () => {
 
     test('get diseases from db', async () => {
         const doctors = await appointmentsModel.getDoctors()
-        console.log(doctors)
         expect(doctors).toBeDefined()
     })
 

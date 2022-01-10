@@ -8,7 +8,6 @@ const getAppointmentsByPatientId = async (id) => {
     const doctorsTable = db.getCollection('doctors')
     try {
         appoints = appointmentsTable.find({ patientId: { '$eq': parseInt(id) } })
-        console.log(appoints)
         return appoints.map(app => {
             const doc = doctorsTable.findOne({ id: app.doctorId })
             return {
@@ -18,7 +17,6 @@ const getAppointmentsByPatientId = async (id) => {
                 doctorId: doc.id
             }
         })
-
     } catch (err) {
         console.log(err)
     }
