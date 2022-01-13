@@ -1,6 +1,6 @@
 {
   "name": "hospital-backend",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
@@ -23,6 +23,7 @@
     "jsonwebtoken": "^8.5.1",
     "lokijs": "^1.5.12",
     "morgan": "~1.9.1",
+    "nodemon": "^2.0.15",
     "npmlog": "^6.0.0",
     "pug": "^3.0.2",
     "swagger-autogen": "^2.17.2",
