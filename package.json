@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "cookie-parser": "~1.4.4",
+    "cookie-parser": "1.4.6",
     "core-js": "^3.18.0",
     "cors": "^2.8.5",
     "dayjs": "^1.10.7",
