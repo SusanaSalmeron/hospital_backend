@@ -7,16 +7,12 @@
   },
   "host": "localhost:3001",
   "basePath": "/",
-  "tags": [],
   "schemes": [
     "http"
   ],
-  "consumes": [],
-  "produces": [],
   "paths": {
     "/api-docs": {
       "get": {
-        "tags": [],
         "description": "",
         "parameters": [],
         "responses": {}
