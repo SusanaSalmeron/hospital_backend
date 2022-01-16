@@ -61,3 +61,6 @@ typings/
 .next
 
 *.rest
+
+test_reports/
+swagger.json
