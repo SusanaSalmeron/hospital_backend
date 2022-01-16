@@ -3,10 +3,19 @@ version: 2.1
 orbs:
   node: circleci/node@5.0.0
 
+jobs:
+  install-node:
+    docker:
+      - image: 'cimg/node:14.18.3'
+    resource_class: small
+    steps:
+      - checkout
+      - node/install:
+          node-version: '14.17'
+      - run: node --version
+
 workflows:
   pipeline: 
     jobs:
       - node/test:
-          version: '14.17'
-          pkg-manager: npm
           test-results-for: jest
