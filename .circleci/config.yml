@@ -17,5 +17,5 @@ jobs:
 workflows:
   pipeline: 
     jobs:
-      - node/test:
-          test-results-for: jest
+      - node/test
+          
