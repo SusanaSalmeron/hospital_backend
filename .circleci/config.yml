@@ -13,6 +13,7 @@ jobs:
       - node/install:
         node-version: '14.17'
       - run: node --version
+      - run: npm install
       - run: npm run test
   swagger:
     docker:
@@ -23,6 +24,7 @@ jobs:
       - node/install:
         node-version: '14.17'
       - run: npm run docs
+      - run: npm ci
       - run: cat swagger.json
 
 workflows:
