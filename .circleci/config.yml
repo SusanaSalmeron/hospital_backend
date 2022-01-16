@@ -11,19 +11,19 @@ jobs:
     steps:
       - checkout
       - node/install:
-          node-version: '14.17'
+        node-version: '14.17'
       - run: node --version
       - run: npm run test
   swagger:
     docker:
-        - image: 'cimg/node:14.18.3'
-      resource_class: small
-      steps:
-        - checkout
-        - node/install:
-            node-version: '14.17'
-        - run: npm run docs
-        - run: cat swagger.json
+      - image: 'cimg/node:14.18.3'
+    resource_class: small
+    steps:
+      - checkout
+      - node/install:
+        node-version: '14.17'
+      - run: npm run docs
+      - run: cat swagger.json
 
 workflows:
   pipeline: 
