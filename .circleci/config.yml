@@ -23,13 +23,14 @@ jobs:
       - checkout
       - node/install:
         node-version: '14.17'
-      - run: npm run docs
       - run: npm ci
+      - run: npm run docs
       - run: cat swagger.json
 
 workflows:
   pipeline: 
     jobs:
-      - test
+      - test:
+          test-results-for: jest
       - swagger
           

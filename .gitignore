@@ -61,3 +61,6 @@ typings/
 .next
 
 *.rest
+
+junit.xml
+swagger.json
