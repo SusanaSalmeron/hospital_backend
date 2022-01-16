@@ -33,5 +33,9 @@
   "devDependencies": {
     "jest": "27.4.7",
     "jest-junit": "13.0.0  "
+  },
+  "jest-junit": {
+    "outputDirectory": "test_reports",
+    "outputName": "jest-junit.xml"
   }
 }

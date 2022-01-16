@@ -62,5 +62,5 @@ typings/
 
 *.rest
 
-junit.xml
+test_reports/
 swagger.json
