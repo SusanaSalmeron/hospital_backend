@@ -13,7 +13,7 @@ const dataForAppointmentsTests = () => {
         const newFakeAppId = faker.datatype.number()
         const newFakePatientId = faker.datatype.number()
         const newFakeDoctorId = faker.datatype.number()
-        const newFakeMockDate = faker.date.recent()
+        const newFakeMockDate = faker.date.future()
 
         table.insert({
             id: newFakeAppId,

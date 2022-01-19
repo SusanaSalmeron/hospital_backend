@@ -4,6 +4,7 @@ const { getAll, getBy, getById, getRecordById, addNewRecord, getDiseases, modify
 const { getAppointmentsByPatientId, addNewAppointment, changeAppointment, deleteAppointment, getDoctors } = require('../../models/appointments.model');
 const { authenticateToken, authorizeDoctor } = require('../../middleware/tokenAuthentication');
 const dayjs = require('dayjs');
+const { validateDate } = require('../../middleware/validateDate');
 
 //Patient related operations
 router.get('/', authenticateToken, authorizeDoctor, async (req, res) => {
@@ -112,7 +113,7 @@ router.get('/:id/appointments', authenticateToken, async (req, res) => {
     }
 })
 
-router.post('/:id/appointments', authenticateToken, async (req, res) => {
+router.post('/:id/appointments', authenticateToken, validateDate, async (req, res) => {
     /* 	#swagger.tags = ['Patients']
        #swagger.description = 'Endpoint to add an appointment to a patient' */
 
@@ -133,6 +134,7 @@ router.post('/:id/appointments', authenticateToken, async (req, res) => {
     let date = pickedDate
     const { id } = req.params
     try {
+
         const appointmentAdded = await addNewAppointment(id, date, doctor)
         if (appointmentAdded) {
             log.info('addAppointment', 'add appointment successfully')
