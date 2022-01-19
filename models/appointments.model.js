@@ -1,4 +1,5 @@
 const { getById } = require('./patients.model');
+const dayjs = require('dayjs')
 
 let appointmentId = 1000
 
@@ -27,7 +28,8 @@ const addNewAppointment = async (patientId, date, doctorId) => {
     const patient = await getById(patientId)
     const doctorsTable = db.getCollection('doctors')
     const doctor = doctorsTable.findOne({ id: doctorId })
-    if (patient && doctor) {
+    const newDate = dayjs().format('DD-MM-YYYY')
+    if (patient && doctor && date >= newDate) {
         const appointmentsTable = db.getCollection('appointments')
         appointmentsTable.insert({
             id: appointmentId++,
