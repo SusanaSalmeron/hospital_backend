@@ -1,4 +1,5 @@
 const { getById } = require('./patients.model');
+const dayjs = require('dayjs')
 
 let appointmentId = 1000
 
