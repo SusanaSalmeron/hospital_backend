@@ -1,13 +1,14 @@
+
+[![CircleCI](https://img.shields.io/circleci/build/github/SusanaSalmeron/hospital_backend?style=plastic)](https://app.circleci.com/pipelines/github/SusanaSalmeron/hospital_backend)
+
 <div align="center">
-<h3 align="center">Api rest hospital management</h3>
+<h3 align="center">API REST Hospital Management</h3>
 <p align="center">
     Hospital administration. Sign up and register. Patient search, see and add clinical records for doctors. Appointments for patients.
     <br />
     <a href="https://github.com/SusanaSalmeron/hospital_backend"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/SusanaSalmeron/hospital_backend">View Demo</a>
-    ·
     <a href="https://github.com/SusanaSalmeron/hospital_backend/issues">Report Bug</a>
     ·
     <a href="https://github.com/SusanaSalmeron/hospital_backend/issues">Request Feature</a>
@@ -80,13 +81,21 @@ You will need installed this technologies:
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Usage
-In the project directory, you can run:
+
+For using this application, it is mandatory to create a file called `.env` at root level with the following content:
+
+```
+SECRET_TOKEN="your private key"
+```
+With this, the application will be able to generate JWT tokens
+
+Next, in the root directory, you can run:
 * To start the project
 ```sh
    npm run dev
 ```
 
-* To start swagger
+* To create the swagger docs
 ```sh
    npm docs
 ```
