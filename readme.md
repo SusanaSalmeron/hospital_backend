@@ -1,5 +1,5 @@
 
-[![CircleCI](https://img.shields.io/circleci/build/github/SusanaSalmeron/hospital_backend?style=plastic)](https://app.circleci.com/pipelines/github/SusanaSalmeron/hospital_backend)
+[![CircleCI](https://img.shields.io/circleci/build/github/SusanaSalmeron/hospital_backend/testing_circleci_badge)](https://app.circleci.com/pipelines/github/SusanaSalmeron/hospital_backend)
 
 <div align="center">
 <h3 align="center">API REST Hospital Management</h3>
