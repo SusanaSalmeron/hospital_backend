@@ -1,12 +1,11 @@
 const nodemailer = require("nodemailer");
 const log = require('npmlog')
 
+let client;
 
-async function sendEmail(email) {
-
-    let testAccount = await nodemailer.createTestAccount();
-
-    let transporter = nodemailer.createTransport({
+async function initializeEmailClient() {
+    const testAccount = await nodemailer.createTestAccount();
+    const transporter = await nodemailer.createTransport({
         host: "smtp.ethereal.email",
         port: 587,
         secure: false,
@@ -15,8 +14,19 @@ async function sendEmail(email) {
             pass: testAccount.pass,
         },
     });
+    return transporter
+}
 
-    let info = await transporter.sendMail({
+const getEmailClient = async () => {
+    if (!client) {
+        client = await initializeEmailClient()
+    }
+    return client
+}
+
+async function sendEmail(email) {
+    const emailClient = await getEmailClient()
+    let info = await emailClient.sendMail({
         from: "emailhhcontactus@gmai.com",
         to: email,
         subject: "No replay",
@@ -28,8 +38,4 @@ async function sendEmail(email) {
     log.info("Preview URL: %s", nodemailer.getTestMessageUrl(info));
 }
 
-
 module.exports = { sendEmail }
-
-
-
