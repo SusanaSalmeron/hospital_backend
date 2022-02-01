@@ -5,7 +5,7 @@ const loki = require('lokijs')
 global.db = new loki('hospital.db');
 
 function loadData() {
-    const tables = ['users', 'patients', 'doctors', 'clinicalRecords', 'appointments', 'diseases']
+    const tables = ['users', 'patients', 'doctors', 'clinicalRecords', 'appointments', 'diseases', 'contactUs']
     tables.forEach(tableName => {
         let rawdata = fs.readFileSync(path.resolve(__dirname, 'data', `${tableName}.json`));
         let data = JSON.parse(rawdata);

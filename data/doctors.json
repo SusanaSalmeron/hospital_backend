@@ -3,60 +3,70 @@
 		"id": 1,
 		"name": "Karly Sosa",
 		"email": "velit.eu.sem@ipsum.co.uk",
-		"speciality": "radiology"
+		"speciality": "gynecology",
+		"photo": "https://images.pexels.com/photos/7580257/pexels-photo-7580257.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
 	},
 	{
 		"id": 2,
 		"name": "Indigo Trevino",
 		"email": "nec.eleifend@tempuslorem.net",
-		"speciality": "surgery"
+		"speciality": "surgery",
+		"photo": "https://images.pexels.com/photos/6303556/pexels-photo-6303556.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
 	},
 	{
 		"id": 3,
 		"name": "Wendy Rush",
 		"email": "mauris.ut@imperdiet.net",
-		"speciality": "genetics"
+		"speciality": "genetics",
+		"photo": "https://images.pexels.com/photos/5215024/pexels-photo-5215024.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
 	},
 	{
 		"id": 4,
 		"name": "Ulysses Gray",
 		"email": "vestibulum.mauris@pedenonummy.com",
-		"speciality": "psychiatry"
+		"speciality": "psychiatry",
+		"photo": "https://images.pexels.com/photos/8376181/pexels-photo-8376181.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
 	},
 	{
 		"id": 5,
 		"name": "Kimberley Avery",
 		"email": "ultrices.duis@loremipsumdolor.ca",
-		"speciality": "family"
+		"speciality": "family",
+		"photo": "https://images.pexels.com/photos/5998474/pexels-photo-5998474.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
 	},
 	{
 		"id": 6,
 		"name": "Clementine Mcdaniel",
 		"email": "sed.est@sodalespurus.ca",
-		"speciality": "ophthalmology"
+		"speciality": "ophthalmology",
+		"photo": "https://images.pexels.com/photos/3846038/pexels-photo-3846038.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
 	},
 	{
 		"id": 7,
 		"name": "Lev Adams",
 		"email": "curabitur@lectus.org",
-		"speciality": "radiology"
+		"speciality": "radiology",
+		"photo": "https://images.pexels.com/photos/7089292/pexels-photo-7089292.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
 	},
 	{
 		"id": 8,
 		"name": "Devin Fitzpatrick",
 		"email": "enim.etiam.imperdiet@enimgravida.net",
-		"speciality": "immunology"
+		"speciality": "inmunology",
+		"photo": "https://images.pexels.com/photos/6303556/pexels-photo-6303556.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
 	},
 	{
 		"id": 9,
 		"name": "Dorothy Roberson",
 		"email": "sed@duiselementum.org",
-		"speciality": "neurology"
+		"speciality": "neurology",
+		"photo": "https://images.pexels.com/photos/6749778/pexels-photo-6749778.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
 	},
 	{
 		"id": 10,
 		"name": "Hector Potter",
 		"email": "nisl.sem.consequat@nulla.net",
-		"speciality": "oncology"
+		"speciality": "oncology",
+		"photo": "https://images.pexels.com/photos/10691259/pexels-photo-10691259.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
 	}
 ]

@@ -4,7 +4,7 @@ const { getDiseases } = require('../../models/patients.model');
 const { getDoctors } = require('../../models/appointments.model');
 const { authenticateToken } = require('../../middleware/tokenAuthentication');
 
-router.get('/doctors', authenticateToken, async (req, res) => {
+router.get('/doctors', async (req, res) => {
     /* 	#swagger.tags = ['Catalogs']
        #swagger.description = 'Endpoint to get data from doctors' */
     try {

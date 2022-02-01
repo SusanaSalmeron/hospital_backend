@@ -1,5 +1,4 @@
 const { getById } = require('./patients.model');
-const dayjs = require('dayjs')
 
 let appointmentId = 1000
 
@@ -88,7 +87,8 @@ const getDoctors = async () => {
             id: doctor.id,
             name: doctor.name,
             email: doctor.email,
-            speciality: doctor.speciality
+            speciality: doctor.speciality,
+            photo: doctor.photo
         }
     })
 }
