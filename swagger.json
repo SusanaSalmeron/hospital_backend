@@ -311,6 +311,9 @@
           "200": {
             "description": "OK"
           },
+          "400": {
+            "description": "Bad Request"
+          },
           "401": {
             "description": "Unauthorized"
           },
@@ -460,22 +463,10 @@
           "Catalogs"
         ],
         "description": "Endpoint to get data from doctors",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "OK"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
           },
           "404": {
             "description": "Not Found"
@@ -514,6 +505,33 @@
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/v1/managements/contact": {
+      "post": {
+        "tags": [
+          "Management"
+        ],
+        "description": "Endpoint to create contact us queries",
+        "parameters": [
+          {
+            "name": "Payload",
+            "in": "body",
+            "description": "contact us form content",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ContactUsForm"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
@@ -646,6 +664,31 @@
         "company": {
           "type": "string",
           "example": "Augue Id Corporation"
+        }
+      }
+    },
+    "ContactUsForm": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number",
+          "example": 7
+        },
+        "name": {
+          "type": "string",
+          "example": "Peter Smith"
+        },
+        "email": {
+          "type": "string",
+          "example": "peters@gmai.com"
+        },
+        "subject": {
+          "type": "string",
+          "example": "new date"
+        },
+        "message": {
+          "type": "string",
+          "example": "asdfghjklñasdfghjklñasdfghjklñasdfghjklñasdfghjklñ"
         }
       }
     }
