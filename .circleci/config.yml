@@ -6,7 +6,7 @@ orbs:
 jobs:
   test:
     docker:
-      - image: 'cimg/node:14.18.3'
+      - image: 'cimg/node:17.7.2'
     resource_class: small
     steps:
       - checkout
@@ -17,7 +17,7 @@ jobs:
       - run: npm run test
   swagger:
     docker:
-      - image: 'cimg/node:14.18.3'
+      - image: 'cimg/node:17.7.2'
     resource_class: small
     steps:
       - checkout
