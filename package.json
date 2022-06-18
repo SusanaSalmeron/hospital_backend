@@ -24,7 +24,7 @@
     "lokijs": "1.5.12",
     "morgan": "1.10.0",
     "nodemon": "2.0.15",
-    "npmlog": "6.0.0",
+    "npmlog": "6.0.2",
     "pug": "3.0.2",
     "swagger-autogen": "2.18.8",
     "swagger-jsdoc": "6.1.0",
