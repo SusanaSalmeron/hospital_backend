@@ -26,7 +26,7 @@
     "nodemon": "2.0.15",
     "npmlog": "6.0.0",
     "pug": "3.0.2",
-    "swagger-autogen": "2.18.8",
+    "swagger-autogen": "2.23.7",
     "swagger-jsdoc": "6.1.0",
     "swagger-ui-express": "4.3.0"
   },
