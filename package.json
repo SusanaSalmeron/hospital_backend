@@ -22,7 +22,7 @@
     "http-errors": "2.0.0",
     "jsonwebtoken": "8.5.1",
     "lokijs": "1.5.12",
-    "morgan": "1.10.0",
+    "morgan": "1.12.0",
     "nodemon": "2.0.15",
     "npmlog": "6.0.0",
     "pug": "3.0.2",
